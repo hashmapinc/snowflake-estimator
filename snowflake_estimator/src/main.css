@@ -1,0 +1,66 @@
+* {
+  font-family: "Lato", sans-serif
+}
+
+input {
+  background: rgb(239, 238, 239);
+}
+
+.error {
+  color: purple;
+}
+
+p {
+  font-size: 150%;
+}
+
+.spinner {
+  display: none;
+  position: relative;
+  top: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  z-index: 1;
+  border: 8px solid #f3f3f3;
+  border-color: rgb(239, 238, 239);
+  border-radius: 50%;
+  border-top: 8px solid #3498db;
+  width: 5rem;
+  height: 5rem;
+  color: rgb(70, 172, 236);
+  -webkit-animation: spin 2s linear infinite;
+  /* Safari */
+  animation: spin 2s linear infinite;
+}
+
+/* Safari */
+
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+body {
+  padding-top: 70px;
+}
+
+.spacer {
+  height: 10vh;
+}
+
+#submit_button {
+  margin-bottom: 100px;
+}
