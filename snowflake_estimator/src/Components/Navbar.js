@@ -28,11 +28,6 @@ class Navbar extends Component {
                     <li className="nav-item">
                         <a className="nav-link" href="https://forms.gle/WfiB6YctX5Jg2zTs6" target="_blank">Feedback </a>
                     </li>
-                    <li className="nav-item">
-                        <a href={''} target="_blank" className="nav-item btn btn-primary ml-3">
-                        See a Sample Profile
-                        </a>
-                    </li>
                 </ul>
             </div>
         </header>

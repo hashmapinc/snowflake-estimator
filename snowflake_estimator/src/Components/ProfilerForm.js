@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import { Button, Form, Spinner} from "react-bootstrap";
+import Fade from 'react-bootstrap/Fade';
+import Results from './Results.js';
 import '../main.css'
-import ViewProfileButton from './ViewProfileButton'
 
 
 class ProfilerForm extends Component {
@@ -11,6 +12,7 @@ class ProfilerForm extends Component {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleResultClick = this.handleResultClick.bind(this);
 
     /** Intializing props for form component */
     this.state = {
@@ -32,13 +34,18 @@ class ProfilerForm extends Component {
     this.setState({
       [event.target.name]: event.target.value
     });
-    console.log("data_size",this.state.data_size);
-    console.log("data growth rate", this.state.growth_rate);
+  }
+
+  handleResultClick() {
+    this.setState({
+      calc_results: null
+    });
   }
 
   /** Handles form submission */
   handleSubmit = (event) => {
-    this.setState({calc_results: null})
+    this.setState({calc_results: null});
+    console.log('working ', this.state.calc_results);
     
     /** Checks validity of form 
      */
@@ -51,11 +58,17 @@ class ProfilerForm extends Component {
     /** sends a fetch request to the flask api */
     event.preventDefault();
     this.setState({isLoading:true});
+
     /** calculation goes here */
-    this.state.calc_results = "Credits " + String((this.state.data_size * this.state.growth_rate) + 4);
-    this.setState({calc_results: this.state.calc_results});
+    if (this.state.data_size && this.state.growth_rate && this.state.bi_reports && this.state.bi_users) {
+      this.state.calc_results = (this.state.data_size * this.state.growth_rate);
+      this.setState({calc_results: this.state.calc_results});
+      console.log('working');
+    }
+
     console.log(this.state.calc_results);
     this.setState({validated:true, error: null, isLoading:false})}
+    
 
   render() {
     let {isLoading, calc_results, validated} = this.state;
@@ -64,14 +77,6 @@ class ProfilerForm extends Component {
     const renderSpinning = ()=>{
       if(isLoading) {
         return <Spinner className='spinner' animation="border" variant="primary" style={{width:'5rem', height:'5rem'}}><span className="sr-only">Loading...</span></Spinner>
-      } else {
-        return
-      }
-    }
-
-    const renderResults = ()=>{
-      if(calc_results) {
-        return <h1>{calc_results}</h1>
       } else {
         return
       }
@@ -86,7 +91,7 @@ class ProfilerForm extends Component {
       <div className="py-5 text-center">
           <h2>Calculate your Snowflake Credit Usage</h2>
           {renderSpinning()}
-          {renderResults()}
+          <Results calc_results={calc_results} handler={this.handleResultClick}></Results>
       </div>
       <div class="row">
       <div class="col-8 col-xs-12 order-md-1 mx-auto">

@@ -64,3 +64,68 @@ body {
 #submit_button {
   margin-bottom: 100px;
 }
+
+/* overlay styles, all needed */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 10;
+}
+
+/* overlay styles, all needed */
+.overlay_content {
+  width: 300px;
+  height: 200px;
+  line-height: 200px;
+  position: fixed;
+  top: 50%; 
+  left: 50%;
+  margin-top: -100px;
+  margin-left: -150px;
+  background-color: #f8f4f4;
+  border-radius: 10px;
+  text-align: center;
+  z-index: 11; /* 1px higher than the overlay layer */
+}
+
+.overlay_button {
+  position: relative;
+  margin-top: -40px;
+}
+
+.overlay_text {
+  position: relative;
+  margin-top: -10px;
+}
+
+.overlay {
+  animation: fadeIn ease 1s;
+  -webkit-animation: fadeIn ease 1s;
+  -moz-animation: fadeIn ease 1s;
+  -o-animation: fadeIn ease 1s;
+  -ms-animation: fadeIn ease 1s;
+}
+@keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+@-moz-keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+@-webkit-keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+@-o-keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+@-ms-keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
