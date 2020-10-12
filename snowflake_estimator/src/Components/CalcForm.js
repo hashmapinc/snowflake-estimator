@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import { Button, Form, Spinner} from "react-bootstrap";
-import Fade from 'react-bootstrap/Fade';
 import Results from './Results.js';
+import LoadingSpinner from './Spinner.js';
 import '../main.css'
 
 
-class ProfilerForm extends Component {
+class CalcForm extends Component {
   
 
   constructor(props) {
@@ -30,12 +30,14 @@ class ProfilerForm extends Component {
     };
   }
 
+  /** handles form field inputs */
   handleInputChange(event) {
     this.setState({
       [event.target.name]: event.target.value
     });
   }
 
+  /** handles results button click */
   handleResultClick() {
     this.setState({
       calc_results: null
@@ -73,24 +75,12 @@ class ProfilerForm extends Component {
   render() {
     let {isLoading, calc_results, validated} = this.state;
 
-    /** function that renders spinner if not false */
-    const renderSpinning = ()=>{
-      if(isLoading) {
-        return <Spinner className='spinner' animation="border" variant="primary" style={{width:'5rem', height:'5rem'}}><span className="sr-only">Loading...</span></Spinner>
-      } else {
-        return
-      }
-    }
-
-    /** renders form
-   * renders spinner if set to true
-   * renders error message if not null
-   */
+    /** renders form */
     return (
       <div className="container">
       <div className="py-5 text-center">
           <h2>Calculate your Snowflake Credit Usage</h2>
-          {renderSpinning()}
+          <LoadingSpinner isLoading={isLoading}></LoadingSpinner>
           <Results calc_results={calc_results} handler={this.handleResultClick}></Results>
       </div>
       <div class="row">
@@ -177,4 +167,4 @@ class ProfilerForm extends Component {
 }
 
 
-export default ProfilerForm
+export default CalcForm

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Navbar from './Components/Navbar'
-import ProfilerForm from './Components/ProfilerForm'
+import CalcForm from './Components/CalcForm'
 
 import './main.css'
 import './App.css';
@@ -22,7 +22,7 @@ class App extends Component {
           <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
         
         <Navbar />
-        <ProfilerForm />
+        <CalcForm />
 
         <script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/4376150.js"></script>
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

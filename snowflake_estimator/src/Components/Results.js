@@ -7,7 +7,7 @@ class Results extends React.Component {
         if (this.props.calc_results) {
             return <div className="overlay">
                       <div className="overlay_content">
-                        <h1>{this.props.calc_results}</h1>
+                        <h1 className="credits">{this.props.calc_results}</h1>
                         <h4 className="overlay_text">Snowflake Credits</h4>
                         <Button variant="btn btn-primary btn-lg" type="submit" className="overlay_button" onClick={this.props.handler}>Make Another Calculation</Button>
                       </div>
