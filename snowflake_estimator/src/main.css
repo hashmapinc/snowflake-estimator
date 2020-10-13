@@ -136,7 +136,15 @@ body {
   font-size: 400%;
 }
 
-.overlay_linechart {
-  width: 50%;
-  height: 65%;
+@media screen and (max-width: 1440px) {
+  .overlay_linechart {
+    width: 50%;
+    height: 65%;
+  }
+}
+
+@media screen and (max-width: 1920px) {
+  .overlay_linechart {
+    width: 50%;
+  }
 }
