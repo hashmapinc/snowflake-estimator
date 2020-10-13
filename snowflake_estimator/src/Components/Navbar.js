@@ -28,6 +28,9 @@ class Navbar extends Component {
                     <li className="nav-item">
                         <a className="nav-link" href="https://forms.gle/WfiB6YctX5Jg2zTs6" target="_blank">Feedback </a>
                     </li>
+                    <li className="nav-item">
+                        <a className="nav-link" href="https://www.snowflake.com/pricing/" target="_blank">Snowflake Pricing </a>
+                    </li>
                 </ul>
             </div>
         </header>
