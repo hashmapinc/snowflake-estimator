@@ -22,16 +22,6 @@ class LineChart extends React.Component {
                 type: 'scatter',
                 name: 'Low Estimate',
                 marker: {color: 'blue'},
-                xaxis: {
-                  linecolor: 'black',
-                  linewidth: 2,
-                  mirror: true,
-                },
-                yaxis: {
-                  linecolor: 'black',
-                  linewidth: 2,
-                  mirror: true,
-                }
               },
               {
                 x: arr,
@@ -39,16 +29,6 @@ class LineChart extends React.Component {
                 type: 'scatter',
                 name: 'Medium Estimate',
                 marker: {color: 'green'},
-                xaxis: {
-                  linecolor: 'black',
-                  linewidth: 2,
-                  mirror: true,
-                },
-                yaxis: {
-                  linecolor: 'black',
-                  linewidth: 2,
-                  mirror: true,
-                }
               },
               {
                 x: arr,
@@ -56,16 +36,6 @@ class LineChart extends React.Component {
                 type: 'scatter',
                 marker: {color: 'red'},
                 name: 'High Estimate',
-                xaxis: {
-                  linecolor: 'black',
-                  linewidth: 2,
-                  mirror: true,
-                },
-                yaxis: {
-                  linecolor: 'black',
-                  linewidth: 2,
-                  mirror: true,
-                }
               },
             ]}
             layout={ {title: 'Monthly Credit Usage'} }
