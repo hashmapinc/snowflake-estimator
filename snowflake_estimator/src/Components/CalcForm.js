@@ -18,7 +18,9 @@ class CalcForm extends Component {
     this.state = {
       validated: false,
       isLoading: false,
-      calc_results: null,
+      low_calc_results: null,
+      med_calc_results: null,
+      high_calc_results: null,
       data_size: null,
       growth_rate: null,
       frequency: null,
@@ -40,14 +42,20 @@ class CalcForm extends Component {
   /** handles results button click */
   handleResultClick() {
     this.setState({
-      calc_results: null
+      low_calc_results: null,
+      med_calc_results: null,
+      high_calc_results: null,
     });
   }
 
   /** Handles form submission */
   handleSubmit = (event) => {
-    this.setState({calc_results: null});
-    console.log('working ', this.state.calc_results);
+    this.setState({
+      low_calc_results: null,
+      med_calc_results: null,
+      high_calc_results: null,
+    });
+    console.log('working ', this.state.med_calc_results);
     
     /** Checks validity of form 
      */
@@ -63,17 +71,27 @@ class CalcForm extends Component {
 
     /** calculation goes here */
     if (this.state.data_size && this.state.growth_rate && this.state.bi_reports && this.state.bi_users) {
-      this.state.calc_results = (this.state.data_size * this.state.growth_rate);
-      this.setState({calc_results: this.state.calc_results});
-      console.log('working');
+
+      /** add calculations for low, medium, high here!! */
+      this.state.low_calc_results = (this.state.data_size * this.state.growth_rate * 0.5);
+      this.state.med_calc_results = (this.state.data_size * this.state.growth_rate);
+      this.state.high_calc_results = (this.state.data_size * this.state.growth_rate * 2);
+
+      this.setState({
+        low_calc_results: this.state.low_calc_results,
+        med_calc_results: this.state.med_calc_results,
+        high_calc_results: this.state.high_calc_results,
+      });
     }
 
-    console.log(this.state.calc_results);
+    console.log(this.state.low_calc_results);
+    console.log(this.state.med_calc_results);
+    console.log(this.state.high_calc_results);
     this.setState({validated:true, error: null, isLoading:false})}
     
 
   render() {
-    let {isLoading, calc_results, validated} = this.state;
+    let {isLoading, low_calc_results, med_calc_results, high_calc_results, validated} = this.state;
 
     /** renders form */
     return (
@@ -81,7 +99,7 @@ class CalcForm extends Component {
       <div className="py-5 text-center">
           <h2>Calculate your Snowflake Credit Usage</h2>
           <LoadingSpinner isLoading={isLoading}></LoadingSpinner>
-          <Results calc_results={calc_results} handler={this.handleResultClick}></Results>
+          <Results low_calc_results={low_calc_results} med_calc_results={med_calc_results} high_calc_results={high_calc_results} handler={this.handleResultClick}></Results>
       </div>
       <div class="row">
       <div class="col-8 col-xs-12 order-md-1 mx-auto">

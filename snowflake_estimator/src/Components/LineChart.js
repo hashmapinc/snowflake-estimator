@@ -13,32 +13,54 @@ class LineChart extends React.Component {
               var m = d.toISOString().split('T')[0];
               arr.push(m);
             };
+            
+            /** Calculates low, med, high estimates from given calculated values */
+            var low_est = [];
+            var med_est = [];
+            var high_est = [];
+
+            var low_tmp = 0;
+            var med_tmp = 0;
+            var high_tmp = 0;
+
+            var low_monthly_credits = this.props.low_calc_results/12;
+            var med_monthly_credits = this.props.med_calc_results/12;
+            var high_monthly_credits = this.props.high_calc_results/12;
+
+            for (i = 0; i < 12; i++) {
+              low_est.push(low_monthly_credits+low_tmp)
+              low_tmp += low_monthly_credits
+              med_est.push(med_monthly_credits+med_tmp)
+              med_tmp += med_monthly_credits
+              high_est.push(high_monthly_credits+high_tmp)
+              high_tmp += high_monthly_credits
+        }
 
             return <Plot className="overlay_linechart"
             data={[
               {
                 x: arr,
-                y: [.5,1,1.5,2,2.5,3,3.5,4,4.5,5,5.5,6],
+                y: low_est,
                 type: 'scatter',
                 name: 'Low Estimate',
                 marker: {color: 'blue'},
               },
               {
                 x: arr,
-                y: [1,2,3,4,5,6,7,8,9,10,11,12],
+                y: med_est,
                 type: 'scatter',
                 name: 'Medium Estimate',
                 marker: {color: 'green'},
               },
               {
                 x: arr,
-                y: [2,4,6,8,10,12,14,16,18,20,22,24],
+                y: high_est,
                 type: 'scatter',
                 marker: {color: 'red'},
                 name: 'High Estimate',
               },
             ]}
-            layout={ {title: 'Monthly Credit Usage'} }
+            layout={ {title: 'Cumulative Credit Usage by Month'} }
           />
         ;
       }
