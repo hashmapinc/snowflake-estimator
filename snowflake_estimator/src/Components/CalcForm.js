@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import { Button, Form, Spinner} from "react-bootstrap";
-import Results from './Results.js';
+import { Button, Form} from "react-bootstrap";
+import Results from './CalcResults.js';
 import LoadingSpinner from './Spinner.js';
 import '../main.css'
 
