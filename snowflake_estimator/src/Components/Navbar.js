@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import hashmaplogo from './hashmap_banner_white.png';
+import hashmaplogo from '../hashmap_banner_white.png';
 import '../main.css'
 
 class Navbar extends Component {

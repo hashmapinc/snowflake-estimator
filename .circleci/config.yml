@@ -1,0 +1,33 @@
+version: 2.1
+
+jobs:
+  deploy_react:
+    docker: 
+      - image: cimg/node:14.11.0
+
+    steps:
+      - checkout
+
+      - run:
+          name: Install Dependencies
+          command: |
+            cd $WORKING_DIRECTORY
+            npm install
+            sudo apt-get update && sudo apt-get install -y python-dev
+            sudo curl -O https://bootstrap.pypa.io/get-pip.py
+            sudo python get-pip.py
+            sudo pip install awscli --upgrade
+            cd .. 
+      - run:
+          name: Build static files for React App and Deploy to S3
+          command: |
+            cd $WORKING_DIRECTORY
+            npm run build
+            aws s3 sync build/ s3://$S3_BUCKET_NAME --delete
+workflows:
+  build_and_deploy:
+    jobs:
+      - deploy_react
+          # filters:
+          #   branches:
+          #     only: master
