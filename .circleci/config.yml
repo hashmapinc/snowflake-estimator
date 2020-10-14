@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   deploy_react:
     docker: 
-      - image: cimg/node:14.11.0
+      - image: cimg/node:14.9.0
 
     steps:
       - checkout
