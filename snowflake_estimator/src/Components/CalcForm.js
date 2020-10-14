@@ -73,20 +73,13 @@ class CalcForm extends Component {
     if (this.state.data_size && this.state.growth_rate && this.state.bi_reports && this.state.bi_users) {
 
       /** add calculations for low, medium, high here!! */
-      this.state.low_calc_results = (this.state.data_size * this.state.growth_rate * 0.5);
-      this.state.med_calc_results = (this.state.data_size * this.state.growth_rate);
-      this.state.high_calc_results = (this.state.data_size * this.state.growth_rate * 2);
-
       this.setState({
-        low_calc_results: this.state.low_calc_results,
-        med_calc_results: this.state.med_calc_results,
-        high_calc_results: this.state.high_calc_results,
+        low_calc_results: (this.state.data_size * this.state.growth_rate * 0.5),
+        med_calc_results: (this.state.data_size * this.state.growth_rate),
+        high_calc_results: (this.state.data_size * this.state.growth_rate * 2),
       });
     }
 
-    console.log(this.state.low_calc_results);
-    console.log(this.state.med_calc_results);
-    console.log(this.state.high_calc_results);
     this.setState({validated:true, error: null, isLoading:false})}
     
 
