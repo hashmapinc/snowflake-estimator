@@ -17,13 +17,15 @@ jobs:
             sudo curl -O https://bootstrap.pypa.io/get-pip.py
             sudo python get-pip.py
             sudo pip install awscli --upgrade
-            cd .. 
-      - run:
-          name: Build static files for React App and Deploy to S3
-          command: |
-            cd $WORKING_DIRECTORY
             npm run build
             aws s3 sync build/ s3://$S3_BUCKET_NAME --delete
+    #         cd ..
+    #   - run:
+    #       name: Build static files for React App and Deploy to S3
+    #       command: |
+    #         cd $WORKING_DIRECTORY
+    #         npm run build
+    #         aws s3 sync build/ s3://$S3_BUCKET_NAME --delete
 workflows:
   build_and_deploy:
     jobs:
