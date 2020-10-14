@@ -1,5 +1,6 @@
 import React from 'react';
-import Plot from 'react-plotly.js';
+import Plotly from 'plotly.js-basic-dist-min'
+import createPlotlyComponent from 'react-plotly.js/factory';
 import '../main.css';
 
 class LineChart extends React.Component {
@@ -34,10 +35,10 @@ class LineChart extends React.Component {
               med_tmp += med_monthly_credits
               high_est.push(high_monthly_credits+high_tmp)
               high_tmp += high_monthly_credits
-        }
+        };
 
-            return <Plot className="overlay_linechart"
-            data={[
+            const PlotlyComponent = createPlotlyComponent(Plotly);
+            let data = [
               {
                 x: arr,
                 y: low_est,
@@ -59,11 +60,12 @@ class LineChart extends React.Component {
                 marker: {color: 'red'},
                 name: 'High Estimate',
               },
-            ]}
-            layout={ {title: 'Cumulative Credit Usage by Month'} }
-          />
-        ;
-      }
-    }
+            ];
+            let layout = {title: 'Cumulative Credit Usage by Month'};
+            return (
+              <PlotlyComponent className="overlay_linechart" data={data} layout={layout} />
+            );
+          }
+        }
 
 export default LineChart;
