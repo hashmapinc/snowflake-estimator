@@ -22,7 +22,7 @@ jobs:
           name: Build static files for React App and Deploy to S3
           command: |
             cd $WORKING_DIRECTORY
-            CI=false npm run build
+            npm run build
             aws s3 sync build/ s3://$S3_BUCKET_NAME --delete
 workflows:
   build_and_deploy:
