@@ -6,8 +6,8 @@ class Navbar extends Component {
     render() {
         return (
         <header className="navbar navbar-expand-lg navbar-dark fixed-top bg-dark">
-            <a className="navbar-brand" href="https://www.hashmapinc.com/" target="_blank">
-                {<img src={hashmaplogo} width="200px"/>}
+            <a className="navbar-brand" href="https://www.hashmapinc.com/" rel="noopener noreferrer" target="_blank">
+                {<img src={hashmaplogo} alt="Hashmap Logo" width="200px"/>}
             </a>
 
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
@@ -22,17 +22,17 @@ class Navbar extends Component {
 
                 <ul className="navbar-nav">
                     <li className="nav-item">
-                    <a className="nav-link" href="https://www.hashmapinc.com/snowflakedataprofiler-reachout" target="_blank">Contact
+                    <a className="nav-link" href="https://www.hashmapinc.com/snowflakedataprofiler-reachout" rel="noopener noreferrer" target="_blank">Contact
                         Us</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="https://forms.gle/WfiB6YctX5Jg2zTs6" target="_blank">Feedback </a>
+                        <a className="nav-link" href="https://forms.gle/WfiB6YctX5Jg2zTs6" rel="noopener noreferrer" target="_blank">Feedback </a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="https://github.com/hashmapinc/snowflake-estimator" target="_blank">GitHub Repo</a>
+                        <a className="nav-link" href="https://github.com/hashmapinc/snowflake-estimator" rel="noopener noreferrer" target="_blank">GitHub Repo</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="https://www.snowflake.com/pricing/" target="_blank">Snowflake Pricing </a>
+                        <a className="nav-link" href="https://www.snowflake.com/pricing/" rel="noopener noreferrer" target="_blank">Snowflake Pricing </a>
                     </li>
                 </ul>
             </div>
