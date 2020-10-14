@@ -61,9 +61,11 @@ class LineChart extends React.Component {
                 name: 'High Estimate',
               },
             ];
-            let layout = {title: 'Cumulative Credit Usage by Month'};
+            let layout = {title: 'Cumulative Credit Usage by Month', autosize: true};
+            let useResizeHandler = true;
+            let style = {width: "100%", height: "100%"};
             return (
-              <PlotlyComponent className="overlay_linechart" data={data} layout={layout} />
+              <PlotlyComponent className="overlay_linechart" data={data} layout={layout} useResizeHandler={useResizeHandler} style={style}/>
             );
           }
         }
