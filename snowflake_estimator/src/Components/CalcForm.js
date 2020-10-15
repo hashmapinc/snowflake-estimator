@@ -65,7 +65,7 @@ class CalcForm extends Component {
       event.stopPropagation();
     }
 
-    /** sends a fetch request to the flask api */
+    /** starting credit calculation */
     event.preventDefault();
     this.setState({isLoading:true});
 
