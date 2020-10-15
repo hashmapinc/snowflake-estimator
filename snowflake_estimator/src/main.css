@@ -67,12 +67,6 @@ body {
 
 /* overlay styles, all needed */
 #overlay_content {
-  /* 
-  line-height: 200px;
-  position: relative;
-  margin-top: 8%;
-  margin-left: auto;
-  margin-right: auto; */
   height: 80vh;
   overflow: auto;
   margin-top: 100px;
