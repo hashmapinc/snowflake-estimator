@@ -30,4 +30,4 @@ workflows:
       - deploy_react
           filters:
             branches:
-              only: master
+              only: main
