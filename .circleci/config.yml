@@ -27,7 +27,8 @@ jobs:
 workflows:
   build_and_deploy:
     jobs:
-      - deploy_react
+      - deploy_react:
           filters:
             branches:
-              only: main
+              only: 
+                - main
