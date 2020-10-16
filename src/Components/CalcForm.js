@@ -21,14 +21,12 @@ class CalcForm extends Component {
       low_calc_results: null,
       med_calc_results: null,
       high_calc_results: null,
-      data_size: null,
-      growth_rate: null,
-      frequency: null,
-      bi_reports: null,
-      bi_users: null,
-      complexity: null,
-      plan: null,
-
+      data_size: 15,
+      growth_rate: 300,
+      ingestion_frequency: 'Every Hour',
+      bi_dashboards: 100,
+      transformation_complexity: 'Medium',
+      transformation_frequency: 'Every Hour',
     };
   }
 
@@ -70,7 +68,7 @@ class CalcForm extends Component {
     this.setState({isLoading:true});
 
     /** calculation goes here */
-    if (this.state.data_size && this.state.growth_rate && this.state.bi_reports && this.state.bi_users) {
+    if (this.state.data_size && this.state.growth_rate && this.state.bi_dashboards && this.state.bi_users) {
 
       /** add calculations for low, medium, high here!! */
       this.setState({
@@ -96,75 +94,69 @@ class CalcForm extends Component {
         </div>
         <div className="row">
         <div className="col-8 col-xs-12 order-md-1 mx-auto">
-          <h4 className="mb-3">Snowflake details:</h4>
+          <h4 className="mb-3 text-center">Anticipated Snowflake usage details:</h4>
         <div className='full_page'>
-            <Form id='profiler-form' className="needs-validation" noValidate validated={validated} onSubmit={this.handleSubmit}>
+            <Form id='estimator-form' className="needs-validation" noValidate validated={validated} onSubmit={this.handleSubmit}>
                 <Form.Group md="4" controlId="data_size">
-                  <Form.Label>Data Size<span className="text-muted"> (in terabytes)</span></Form.Label>
+                  <Form.Label>Data size before Snowflake compression<span className="text-muted"> (in terabytes)</span></Form.Label>
                   <Form.Control
                     onChange={this.handleInputChange}
                     required
-                    type="text"
-                    placeholder="1000"
+                    type="number"
+                    placeholder={this.state.data_size + ' Terabytes'}
                     name="data_size"
                   />
-                  <Form.Control.Feedback type="invalid">Please enter your Data Size.</Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">Please enter your anticipated data size.</Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group md="4" controlId="growth_rate">
-                  <Form.Label>Data Size Growth Rate<span className="text-muted"> (how much does data size increase every month in gigabytes)</span></Form.Label>
+                  <Form.Label>Data growth rate<span className="text-muted"> (how much does data size increase every month in gigabytes)</span></Form.Label>
                   <Form.Control
                     onChange={this.handleInputChange}
                     required
-                    type="text"
-                    placeholder="1000"
+                    type="number"
+                    placeholder={this.state.growth_rate + ' Gigabytes / month'}
                     name="growth_rate"
                   />
-                  <Form.Control.Feedback type="invalid">Please enter your Data Size Growth Rate.</Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">Please enter your expected monthly data growth in gigabytes.</Form.Control.Feedback>
                 </Form.Group>
-                <Form.Group md="4" controlId="frequency">
-                  <Form.Label>Update Frequency</Form.Label>
-                  <Form.Control as="select" name="frequency" required onChange={this.handleInputChange} custom>
+                <Form.Group md="4" controlId="ingestion_frequency">
+                  <Form.Label>Data ingestion frequency<span className="text-muted"> (on average, how often do you plan to ingest data)</span></Form.Label>
+                  <Form.Control as="select" name="ingestion_frequency" required onChange={this.handleInputChange} custom 
+                    defaultValue={this.state.ingestion_frequency}>
                     <option>Every Minute</option>
                     <option>Every Hour</option>
                     <option>Every Day</option>
                     <option>Every Week</option>
                   </Form.Control>
                 </Form.Group>
-                <Form.Group md="4" controlId="bi_reports">
-                  <Form.Label>BI Reports</Form.Label>
+                <Form.Group md="4" controlId="bi_dashboards">
+                  <Form.Label>Number of BI dashboards<span className="text-muted"> (10 for small, 100 for medium, and 1000 for large organizations if you're not sure)</span></Form.Label>
                   <Form.Control
                     onChange={this.handleInputChange}
                     required
-                    type="text"
-                    placeholder="10"
-                    name="bi_reports"
+                    type="number"
+                    placeholder={this.state.bi_dashboards + ' Dashboards'}
+                    name="bi_dashboards"
                   />
-                  <Form.Control.Feedback type="invalid">Please enter your BI Reports.</Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">Please enter your expected number of BI dashboards.</Form.Control.Feedback>
                 </Form.Group>
-                <Form.Group md="4" controlId="bi_users">
-                  <Form.Label>Concurrent BI Users</Form.Label>
-                  <Form.Control
-                    onChange={this.handleInputChange}
-                    required
-                    type="text"
-                    placeholder="100"
-                    name="bi_users"
-                  />
-                  <Form.Control.Feedback type="invalid">Please enter your Concurrent BI Users.</Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group md="4" controlId="complexity">
-                  <Form.Label>Transformation Complexity <span className="text-muted"> (on average)</span></Form.Label>
-                  <Form.Control as="select" name="complexity" required onChange={this.handleInputChange} custom>
+                <Form.Group md="4" controlId="transformation_complexity">
+                  <Form.Label>Typical transformation complexity <span className="text-muted"> (on average)</span></Form.Label>
+                  <Form.Control as="select" name="transformation_complexity" required onChange={this.handleInputChange} custom
+                    defaultValue={this.state.transformation_complexity}>
                     <option>Low</option>
                     <option>Medium</option>
                     <option>High</option>
                   </Form.Control>
                 </Form.Group>
-                <Form.Group md="4" controlId="plan">
-                  <Form.Label>Payment Plan</Form.Label>
-                  <Form.Control as="select" name="plan" required onChange={this.handleInputChange} custom>
-                    <option>Monthly</option>
-                    <option>Annually</option>
+                <Form.Group md="4" controlId="transformation_frequency">
+                  <Form.Label>Data transformation frequency<span className="text-muted"> (on average, how often do you plan to process data)</span></Form.Label>
+                  <Form.Control as="select" name="transformation_frequency" required onChange={this.handleInputChange} custom
+                    defaultValue={this.state.transformation_frequency}>
+                    <option>Every Minute</option>
+                    <option>Every Hour</option>
+                    <option>Every Day</option>
+                    <option>Every Week</option>
                   </Form.Control>
                 </Form.Group>
               <Button variant="btn btn-primary btn-lg btn-block" type="submit" id="submit_button">Estimate Credits</Button>
