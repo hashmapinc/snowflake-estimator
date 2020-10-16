@@ -21,8 +21,8 @@ class CalcForm extends Component {
       low_calc_results: null,
       med_calc_results: null,
       high_calc_results: null,
-      data_size: 15,
-      growth_rate: 300,
+      data_size: 15000,
+      data_growth_rate: 300,
       ingestion_frequency: 'Every Hour',
       bi_dashboards: 100,
       transformation_complexity: 'Medium',
@@ -30,10 +30,25 @@ class CalcForm extends Component {
     };
   }
 
+  /** Returns the number of times something occurs with a given string frequency.
+   * 
+   * @param string freq - the frequency selection to convert
+   */
+  getAnnualOccurences(freq) {
+    const annual_occurences = 
+      freq === "Every Minute" ? 60 * 24 * 365 :
+      freq === "Every Hour" ? 24 * 365 :
+      freq === "Every Day" ? 365 :
+      freq === "Every Week" ? 52 :
+      null;
+    
+    return annual_occurences;
+  }
+
   /** handles form field inputs */
   handleInputChange(event) {
     this.setState({
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.type === 'number' ? parseInt(event.target.value) : event.target.value
     });
   }
 
@@ -48,37 +63,63 @@ class CalcForm extends Component {
 
   /** Handles form submission */
   handleSubmit = (event) => {
-    this.setState({
-      low_calc_results: null,
-      med_calc_results: null,
-      high_calc_results: null,
-    });
-    console.log('working ', this.state.med_calc_results);
-    
-    /** Checks validity of form 
-     */
+    event.preventDefault();
+
+    debugger;
+
+    // Check validity of form 
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
-      event.preventDefault();
       event.stopPropagation();
     }
 
     /** starting credit calculation */
-    event.preventDefault();
     this.setState({isLoading:true});
 
-    /** calculation goes here */
-    if (this.state.data_size && this.state.growth_rate && this.state.bi_dashboards && this.state.bi_users) {
+    // parse state
 
-      /** add calculations for low, medium, high here!! */
-      this.setState({
-        low_calc_results: (this.state.data_size * this.state.growth_rate * 0.5),
-        med_calc_results: (this.state.data_size * this.state.growth_rate),
-        high_calc_results: (this.state.data_size * this.state.growth_rate * 2),
-      });
-    }
+    // calculate ingestion usage
+    const annual_ingestions = this.getAnnualOccurences(this.state.ingestion_frequency);
+    const total_data_to_ingest = this.state.data_size + this.state.data_growth_rate * 12; //todo: break up initial load from steady-state load
+    const data_to_ingest_per_ingestion = total_data_to_ingest / annual_ingestions;
+    const credits_used_per_ingestion = Math.max(
+      1/60, // minimum possible number of credits usable in snowflake
+      data_to_ingest_per_ingestion / 1024 * 32 / 15.4 
+    );  // formula from this blog post for compressed csv's https://www.snowflake.com/blog/how-to-load-terabytes-into-snowflake-speeds-feeds-and-techniques/#:~:text=While%205%2D6%20TB%2Fhour,landing%20it%20into%20a%20VARIANT.
 
-    this.setState({validated:true, error: null, isLoading:false})}
+    // calculate transformation usage
+    const annual_transformations = this.getAnnualOccurences(this.state.ingestion_frequency);
+    const transformation_complexity_factor = 
+      this.state.transformation_complexity === "High" ? 2 : 
+      this.state.transformation_complexity === "Medium" ? 1 : 
+      this.state.transformation_complexity === "Low" ? 0.5 : 
+      null;
+    const data_processed_per_transformation = total_data_to_ingest / annual_transformations;
+    const credits_used_per_transformation = Math.max(
+      1/60, // minimum possible number of credits usable in snowflake
+      data_processed_per_transformation / 1024 * 32 / 15.4 * Math.log10(this.state.bi_dashboards) * transformation_complexity_factor
+    );
+
+    // calculate consumption usage
+    const annual_consumptions = Math.max(365, annual_transformations) * this.state.bi_dashboards;
+    const credits_used_per_consumption = 1/60 * Math.log2(this.state.data_growth_rate); // TODO: find a better way to do this. Currently assuming BI tables are properly designed for rapid consumption and that credit usage growths lograthmically with the amount of "recent" data. 
+
+    // calculate components of annual usage
+    const ingestion_usage      = annual_ingestions * credits_used_per_ingestion;
+    const transformation_usage = annual_transformations * credits_used_per_transformation;
+    const consumption_usage    = annual_consumptions * credits_used_per_consumption;
+
+    // calculate annual usage
+    const annual_usage = ingestion_usage + transformation_usage + consumption_usage;
+
+    this.setState({
+      low_calc_results:  0.5 * annual_usage,
+      med_calc_results:  1.0 * annual_usage,
+      high_calc_results: 1.5 * annual_usage,
+    });
+
+    this.setState({validated:true, error: null, isLoading:false});
+  }
     
 
   render() {
@@ -98,24 +139,24 @@ class CalcForm extends Component {
         <div className='full_page'>
             <Form id='estimator-form' className="needs-validation" noValidate validated={validated} onSubmit={this.handleSubmit}>
                 <Form.Group md="4" controlId="data_size">
-                  <Form.Label>Data size before Snowflake compression<span className="text-muted"> (in terabytes)</span></Form.Label>
+                  <Form.Label>Total Data size before Snowflake compression<span className="text-muted"> (in gigabytes)</span></Form.Label>
                   <Form.Control
                     onChange={this.handleInputChange}
                     required
                     type="number"
-                    placeholder={this.state.data_size + ' Terabytes'}
+                    placeholder={this.state.data_size + ' Gigabytes'}
                     name="data_size"
                   />
                   <Form.Control.Feedback type="invalid">Please enter your anticipated data size.</Form.Control.Feedback>
                 </Form.Group>
-                <Form.Group md="4" controlId="growth_rate">
+                <Form.Group md="4" controlId="data_growth_rate">
                   <Form.Label>Data growth rate<span className="text-muted"> (how much does data size increase every month in gigabytes)</span></Form.Label>
                   <Form.Control
                     onChange={this.handleInputChange}
                     required
                     type="number"
-                    placeholder={this.state.growth_rate + ' Gigabytes / month'}
-                    name="growth_rate"
+                    placeholder={this.state.data_growth_rate + ' Gigabytes / month'}
+                    name="data_growth_rate"
                   />
                   <Form.Control.Feedback type="invalid">Please enter your expected monthly data growth in gigabytes.</Form.Control.Feedback>
                 </Form.Group>
