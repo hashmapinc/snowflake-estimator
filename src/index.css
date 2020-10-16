@@ -15,3 +15,7 @@ code {
 #newCalcButton { 
   margin-bottom: 15px;
 }
+
+.link { 
+  text-decoration: underline;
+}
