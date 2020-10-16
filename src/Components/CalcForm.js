@@ -127,9 +127,8 @@ class CalcForm extends Component {
     return (
       <Container fluid>
         <div className="py-5 text-left">
-            <p>Snowflake Estimator is designed to provide high level estimates of Snowflake usage for those considering migration to a Modern Cloud Data Warehouse. </p>
-            <p>This tool is not a replacement for a proper assessment! Please use it as a rough order of magnitude estiamte for your credit consumption in Snowflake</p>
-            <p>We have designed this to guess on the high end to support budgeting efforts, so if Snowflake suggests that your costs are lower you should absolutely trust them.</p>
+            <p>Snowflake Estimator is designed to provide high-level estimates of Snowflake usage for those considering migration to a Modern Cloud Data Warehouse. </p>
+            <p>This tool is not a replacement for a proper assessment! Please use it as a rough order of magnitude estimate for your credit consumption in Snowflake.</p>
             <p><a class='link' href='https://www.hashmapinc.com/snowflakeestimator-reachout'>If you're interested in a more formal exercise, please reach out!</a></p>
             <LoadingSpinner isLoading={isLoading}></LoadingSpinner>
             <Results low_calc_results={low_calc_results} med_calc_results={med_calc_results} high_calc_results={high_calc_results} handler={this.handleResultClick}></Results>
