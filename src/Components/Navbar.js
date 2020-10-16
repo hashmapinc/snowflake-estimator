@@ -17,7 +17,7 @@ class NewNavbar extends Component {
                     </div>
                     <Nav className="ml-auto">
                         <Nav.Link href="https://www.hashmapinc.com/snowflakeestimator-reachout" rel="noopener noreferrer" target="_blank">Contact Us</Nav.Link>
-                        <Nav.Link href="https://forms.gle/WfiB6YctX5Jg2zTs6" rel="noopener noreferrer" target="_blank">
+                        <Nav.Link href="https://docs.google.com/forms/d/e/1FAIpQLSc6B82kzw1y9ZwxurukXdgKmQacKiTwof099IFGXE-7NSI77Q/viewform?usp=sf_link" rel="noopener noreferrer" target="_blank">
                             Feedback
                         </Nav.Link>
                         <Nav.Link href="https://github.com/hashmapinc/snowflake-estimator" rel="noopener noreferrer" target="_blank">
