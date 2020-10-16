@@ -74,6 +74,7 @@ body {
   border-radius: 10px;
   text-align: center;
   z-index: 11; /* 1px higher than the overlay layer */
+  padding: 25px;
 }
 
 .overlay_text {
