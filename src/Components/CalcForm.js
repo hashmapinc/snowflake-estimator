@@ -65,8 +65,6 @@ class CalcForm extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
 
-    debugger;
-
     // Check validity of form 
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
