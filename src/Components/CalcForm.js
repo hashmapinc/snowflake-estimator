@@ -21,12 +21,12 @@ class CalcForm extends Component {
       low_calc_results: null,
       med_calc_results: null,
       high_calc_results: null,
-      data_size: 15000,
-      data_growth_rate: 300,
-      ingestion_frequency: 'Every Hour',
-      bi_dashboards: 100,
-      transformation_complexity: 'Medium',
-      transformation_frequency: 'Every Hour',
+      data_size: 5000,
+      data_growth_rate: 100,
+      ingestion_frequency: 'Every Day',
+      bi_dashboards: 25,
+      transformation_complexity: 'Low',
+      transformation_frequency: 'Every Day',
     };
   }
 
