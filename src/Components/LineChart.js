@@ -24,9 +24,9 @@ class LineChart extends React.Component {
             var med_total = 0;
             var high_total = 0;
 
-            var low_monthly_credits = this.props.low_calc_results/12;
-            var med_monthly_credits = this.props.med_calc_results/12;
-            var high_monthly_credits = this.props.high_calc_results/12;
+            var low_monthly_credits  = Math.round(this.props.low_calc_results/12);
+            var med_monthly_credits  = Math.round(this.props.med_calc_results/12);
+            var high_monthly_credits = Math.round(this.props.high_calc_results/12);
 
             for (i = 0; i < 12; i++) {
               low_est.push(low_monthly_credits+low_total)
