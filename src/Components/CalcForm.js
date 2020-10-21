@@ -71,10 +71,10 @@ class CalcForm extends Component {
       event.stopPropagation();
     }
 
-    /** starting credit calculation */
+    //============================================ 
+    // starting credit calculation
+    //============================================ 
     this.setState({isLoading:true});
-
-    // parse state
 
     // calculate ingestion usage
     const annual_ingestions = this.getAnnualOccurences(this.state.ingestion_frequency);
@@ -93,14 +93,15 @@ class CalcForm extends Component {
       this.state.transformation_complexity === "Low" ? 0.5 : 
       null;
     const data_processed_per_transformation = total_data_to_ingest / annual_transformations;
-    const credits_used_per_transformation = Math.max(
+    const credits_used_per_transformation = this.state.bi_dashboards == 0 ? 0 : Math.max( // if there are no dashboards, assume no transformation
       1/60, // minimum possible number of credits usable in snowflake
       data_processed_per_transformation / 1024 * 32 / 15.4 * Math.log10(this.state.bi_dashboards) * transformation_complexity_factor
     );
 
     // calculate consumption usage
     const annual_consumptions = Math.max(365, annual_transformations) * this.state.bi_dashboards;
-    const credits_used_per_consumption = 1/60 * Math.log2(this.state.data_growth_rate); // TODO: find a better way to do this. Currently assuming BI tables are properly designed for rapid consumption and that credit usage growths lograthmically with the amount of "recent" data. 
+    // TODO: find a better way to do this. Currently assuming BI tables are properly designed for rapid consumption and that credit usage growths lograthmically with the amount of "recent" data. 
+    const credits_used_per_consumption = this.state.bi_dashboards == 0 ? 0 : 1/60 * Math.log2(this.state.data_growth_rate); // if there are no dashboards, assume no consumption
 
     // calculate components of annual usage
     const ingestion_usage      = annual_ingestions * credits_used_per_ingestion;
@@ -109,6 +110,7 @@ class CalcForm extends Component {
 
     // calculate annual usage
     const annual_usage = ingestion_usage + transformation_usage + consumption_usage;
+    //============================================ 
 
     this.setState({
       low_calc_results:  0.5 * annual_usage,
@@ -135,11 +137,11 @@ class CalcForm extends Component {
         </div>
         <div className="row">
         <div className="col-8 col-xs-12 order-md-1 mx-auto">
-          <h4 className="mb-3 text-center bold">Anticipated Snowflake usage details:</h4>
+          <h4 className="mb-3 text-center bold">Anticipated Snowflake Usage Details:</h4>
         <div className='full_page'>
             <Form id='estimator-form' className="needs-validation" noValidate validated={validated} onSubmit={this.handleSubmit}>
                 <Form.Group md="4" controlId="data_size">
-                  <Form.Label>Total Data size before Snowflake compression<span className="text-muted"> (in gigabytes)</span></Form.Label>
+                  <Form.Label>Total data size before Snowflake compression<span className="text-muted"> (in gigabytes)</span></Form.Label>
                   <Form.Control
                     onChange={this.handleInputChange}
                     required
