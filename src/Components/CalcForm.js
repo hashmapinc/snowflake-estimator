@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import { Button, Form, Container} from "react-bootstrap";
-import Results from './CalcResults.js';
-import LoadingSpinner from './Spinner.js';
+import CalcResults from './CalcResults.js';
 import '../main.css'
 
 
@@ -12,12 +11,12 @@ class CalcForm extends Component {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleResultClick = this.handleResultClick.bind(this);
+    this.handleModalClose = this.handleModalClose.bind(this);
+    this.handleModalOpen = this.handleModalOpen.bind(this);
 
     /** Intializing props for form component */
     this.state = {
       validated: false,
-      isLoading: false,
       low_calc_results: null,
       med_calc_results: null,
       high_calc_results: null,
@@ -27,7 +26,21 @@ class CalcForm extends Component {
       bi_dashboards: 25,
       transformation_complexity: 'Low',
       transformation_frequency: 'Every Day',
+      credit_cost: null,
+      showModal: false
     };
+  }
+
+  handleModalOpen() {
+    this.setState({
+      showModal: true
+    })
+  }
+
+  handleModalClose() {
+    this.setState({
+      showModal: false
+    })
   }
 
   /** Returns the number of times something occurs with a given string frequency.
@@ -52,15 +65,6 @@ class CalcForm extends Component {
     });
   }
 
-  /** handles results button click */
-  handleResultClick() {
-    this.setState({
-      low_calc_results: null,
-      med_calc_results: null,
-      high_calc_results: null,
-    });
-  }
-
   /** Handles form submission */
   handleSubmit = (event) => {
     event.preventDefault();
@@ -74,7 +78,6 @@ class CalcForm extends Component {
     //============================================ 
     // starting credit calculation
     //============================================ 
-    this.setState({isLoading:true});
 
     // calculate ingestion usage
     const annual_ingestions = this.getAnnualOccurences(this.state.ingestion_frequency);
@@ -118,12 +121,14 @@ class CalcForm extends Component {
       high_calc_results: 1.5 * annual_usage,
     });
 
-    this.setState({validated:true, error: null, isLoading:false});
+    this.setState({validated:true});
+
+    this.handleModalOpen();
   }
     
 
   render() {
-    let {isLoading, low_calc_results, med_calc_results, high_calc_results, validated} = this.state;
+    let {low_calc_results, med_calc_results, high_calc_results, validated} = this.state;
 
     /** renders form */
     return (
@@ -195,6 +200,16 @@ class CalcForm extends Component {
                         <option>Every Week</option>
                       </Form.Control>
                     </Form.Group>
+                    <Form.Group md="4" controlId="credit_cost">
+                      <Form.Label>Cost per Snowflake Credit<span className="text-muted"> (optional)</span></Form.Label>
+                      <Form.Control
+                        onChange={this.handleInputChange}
+                        type="number"
+                        placeholder={'$3'}
+                        name="credit_cost"
+                      />
+                      <Form.Control.Feedback type="invalid">Please enter your expected number of BI dashboards.</Form.Control.Feedback>
+                    </Form.Group>
                   <Button variant="btn btn-primary btn-lg btn-block" type="submit" id="submit_button">Estimate Credits</Button>
                 </Form>
             </div>
@@ -204,8 +219,17 @@ class CalcForm extends Component {
             <p>Snowflake Estimator is designed to provide high-level estimates of Snowflake usage for those considering migration to a Modern Cloud Data Warehouse. </p>
             <p>This tool is not a replacement for a proper assessment! Please use it as a rough order of magnitude estimate for your credit consumption in Snowflake.</p>
             <p><a class='link' href='https://www.hashmapinc.com/snowflakeestimator-reachout'>If you're interested in a more formal exercise, please reach out!</a></p>
-            <LoadingSpinner isLoading={isLoading}></LoadingSpinner>
-            <Results low_calc_results={low_calc_results} med_calc_results={med_calc_results} high_calc_results={high_calc_results} handler={this.handleResultClick}></Results>
+            <CalcResults
+            showModal={this.state.showModal}
+            handleModalClose={this.handleModalClose}
+            handleModalOpen={this.handleModalOpen}
+            low_calc_results={low_calc_results}
+            med_calc_results={med_calc_results}
+            high_calc_results={high_calc_results}
+            credit_cost={this.state.credit_cost}
+            >
+
+            </CalcResults>
           </div>
         </div>
       </Container>
