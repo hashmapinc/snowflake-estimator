@@ -7,6 +7,8 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "bootstrap": "^4.5.3",
+    "js-cookie": "^2.2.1",
+    "md5": "^2.3.0",
     "plotly.js-basic-dist-min": "^1.56.0",
     "react": "^16.13.1",
     "react-bootstrap": "^1.3.0",
