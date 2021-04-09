@@ -4,17 +4,7 @@ import md5 from 'md5';
 
 class HubspotForm extends React.Component {
     // renders hubspot form for first time users
-    constructor() {
-        super();
-        this.state = {
-          optOutCookie: Cookies.get("__hs_cookie_cat_pref")
-        };
-      }
     componentDidMount() {
-        // remove the opt-out cookie so the cookie banner is rendered with the hubspot form
-        if (this.state.optOutCookie) {
-            Cookies.remove('__hs_cookie_cat_pref');
-          };
         const script = document.createElement('script');
         script.src = '//js.hsforms.net/forms/v2.js';
         document.body.appendChild(script);
