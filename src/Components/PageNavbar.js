@@ -4,7 +4,7 @@ import {Navbar, Nav, NavDropdown} from "react-bootstrap";
 import Cookies from 'js-cookie';
 import '../main.css';
 
-class NewNavbar extends Component {
+class PageNavbar extends Component {
     constructor() {
         super();
         this.handleUtlOpen = this.handleUtlOpen.bind(this)
@@ -85,6 +85,6 @@ class NewNavbar extends Component {
     }
 }
 
-export default NewNavbar
+export default PageNavbar
 
     

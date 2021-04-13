@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import NewNavbar from './Components/Navbar';
-import CalcForm from './Components/CalcForm';
+import PageNavbar from './Components/PageNavbar';
 import Cookies from 'js-cookie';
 import {Container} from 'react-bootstrap';
 import HubspotFormNavbar from './Components/HubspotFormNavbar';
@@ -36,8 +35,7 @@ class App extends Component {
             <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat" />
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
           
-          <NewNavbar />
-          <CalcForm />
+          <PageNavbar />
   
           <script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/4376150.js"></script>
           <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
