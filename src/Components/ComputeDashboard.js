@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {Table, Container, Row, Col, Button, Form} from "react-bootstrap";
-// import TableData from './ComputeTableComponents/TableData';
+import TotalCompute from './ComputeDashboardComponents/TotalCompute'
 import '../main.css';
 
-class ComputeTable extends Component {
+class ComputeDashboard extends Component {
     constructor() {
       super();
   
@@ -27,14 +27,17 @@ class ComputeTable extends Component {
                         days_per_week: 5,
                         warehouse_count: 2,
                         warehouse_size: "S",
-                        credits_consumed: 520,
-                        total_cost: 1560
+                        monthly_credits_consumed: 520,
+                        individual_cost: 1560
                     }
                 ],
+                total_cost_monthly: 1560,
+                total_credits_consumed_monthly: 520,
                 style: {"padding-top":"70px"},
             };
         this.findWarehouseSizeValue = this.findWarehouseSizeValue.bind(this);
         this.handleTotalCostChanged = this.handleTotalCostChanged.bind(this);
+        this.computeMonthlyTotals = this.computeMonthlyTotals.bind(this);
     
     }
 
@@ -46,8 +49,8 @@ class ComputeTable extends Component {
             days_per_week: 5,
             warehouse_count: 2,
             warehouse_size: "S",
-            credits_consumed: 520,
-            total_cost: 1560
+            monthly_credits_consumed: 520,
+            individual_cost: 1560
         }
         
         var row_data = this.state.row_data;
@@ -56,6 +59,8 @@ class ComputeTable extends Component {
         this.setState({
             row_data: row_data
         });
+
+        this.computeMonthlyTotals();
         console.log(this.state.row_data)
     }
 
@@ -128,27 +133,35 @@ class ComputeTable extends Component {
     
     handleCreditsChanged(i) {
         var row_data = this.state.row_data;
-        row_data[i].credits_consumed  = (row_data[i].hours_per_day * row_data[i].days_per_week * row_data[i].warehouse_count * this.findWarehouseSizeValue(row_data[i].warehouse_size) * 52 / 12).toFixed(2);
+        row_data[i].monthly_credits_consumed  = (row_data[i].hours_per_day * row_data[i].days_per_week * row_data[i].warehouse_count * this.findWarehouseSizeValue(row_data[i].warehouse_size) * 52 / 12).toFixed(2);
         this.setState({
           row_data: row_data
         });
+        this.computeMonthlyTotals();
       }
 
     handleTotalCostChanged(i) {
         var row_data = this.state.row_data;
-        row_data[i].total_cost  = (row_data[i].credits_consumed * row_data[i].per_credit_cost).toFixed(2)
-    
+        row_data[i].individual_cost  = (row_data[i].monthly_credits_consumed * row_data[i].per_credit_cost).toFixed(2)
         this.setState({
           row_data: row_data
         });
+        this.computeMonthlyTotals();
       }
+    
+    computeMonthlyTotals() {
+        this.setState({
+            total_credits_consumed_monthly: this.state.row_data.map(a => a.monthly_credits_consumed).reduce((a, b) => parseFloat(a) + parseFloat(b)),
+            total_cost_monthly: this.state.row_data.map(a => a.individual_cost).reduce((a, b) => parseFloat(a) + parseFloat(b)),
+        })
+    }
   
     renderRows() {
       var context = this;
   
       return this.state.row_data.map(function(row, index) {
           return (
-            <tr>
+            <tr key={"row-" +index}>
                 <td>
                     <Form.Control
                         type="string"
@@ -164,44 +177,11 @@ class ComputeTable extends Component {
                         />
                 </td>
                 <td>
-                <Form.Control
-                        as="select"
-                        custom
-                        value={row.hours_per_day}
-                        onChange={context.handleHoursChanged.bind(context, index)}
-                    >
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                    <option>6</option>
-                    <option>7</option>
-                    <option>8</option>
-                    <option>9</option>
-                    <option>10</option>
-                    <option>11</option>
-                    <option>12</option>
-                    <option>13</option>
-                    <option>14</option>
-                    <option>15</option>
-                    <option>16</option>
-                    <option>17</option>
-                    <option>18</option>
-                    <option>19</option>
-                    <option>20</option>
-                    <option>21</option>
-                    <option>22</option>
-                    <option>23</option>
-                    <option>24</option>
-                </Form.Control>
-            </td>
-            <td>
-                <Form.Control 
-                        as="select"
-                        custom
-                        value={row.days_per_week}
-                        onChange={context.handleDaysChanged.bind(context, index)}
+                    <Form.Control
+                            as="select"
+                            custom
+                            value={row.hours_per_day}
+                            onChange={context.handleHoursChanged.bind(context, index)}
                         >
                         <option>1</option>
                         <option>2</option>
@@ -210,60 +190,93 @@ class ComputeTable extends Component {
                         <option>5</option>
                         <option>6</option>
                         <option>7</option>
-                </Form.Control>
-            </td>
-            <td>
-                <Form.Control 
-                        as="select"
-                        custom
-                        value={row.warehouse_count}
-                        onChange={context.handleWarehouseCountChanged.bind(context, index)}
+                        <option>8</option>
+                        <option>9</option>
+                        <option>10</option>
+                        <option>11</option>
+                        <option>12</option>
+                        <option>13</option>
+                        <option>14</option>
+                        <option>15</option>
+                        <option>16</option>
+                        <option>17</option>
+                        <option>18</option>
+                        <option>19</option>
+                        <option>20</option>
+                        <option>21</option>
+                        <option>22</option>
+                        <option>23</option>
+                        <option>24</option>
+                    </Form.Control>
+                </td>
+                <td>
+                    <Form.Control 
+                            as="select"
+                            custom
+                            value={row.days_per_week}
+                            onChange={context.handleDaysChanged.bind(context, index)}
+                            >
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                            <option>6</option>
+                            <option>7</option>
+                    </Form.Control>
+                </td>
+                <td>
+                    <Form.Control 
+                            as="select"
+                            custom
+                            value={row.warehouse_count}
+                            onChange={context.handleWarehouseCountChanged.bind(context, index)}
+                            >
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                        <option>6</option>
+                        <option>7</option>
+                        <option>8</option>
+                        <option>9</option>
+                        <option>10</option>
+                        <option>11</option>
+                        <option>12</option>
+                        <option>13</option>
+                        <option>14</option>
+                        <option>15</option>
+                        <option>16</option>
+                        <option>17</option>
+                        <option>18</option>
+                        <option>19</option>
+                        <option>20</option>
+                        <option>21</option>
+                        <option>22</option>
+                        <option>23</option>
+                        <option>24</option>
+                    </Form.Control>
+                </td>
+                <td>
+                    <Form.Control 
+                            as="select"
+                            custom
+                            value={row.warehouse_size}
+                            onChange={context.handleWarehouseSizeChanged.bind(context, index)}
                         >
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                    <option>6</option>
-                    <option>7</option>
-                    <option>8</option>
-                    <option>9</option>
-                    <option>10</option>
-                    <option>11</option>
-                    <option>12</option>
-                    <option>13</option>
-                    <option>14</option>
-                    <option>15</option>
-                    <option>16</option>
-                    <option>17</option>
-                    <option>18</option>
-                    <option>19</option>
-                    <option>20</option>
-                    <option>21</option>
-                    <option>22</option>
-                    <option>23</option>
-                    <option>24</option>
-                </Form.Control>
-            </td>
-            <td>
-                <Form.Control 
-                        as="select"
-                        custom
-                        value={row.warehouse_size}
-                        onChange={context.handleWarehouseSizeChanged.bind(context, index)}
-                    >
-                    <option>XS</option>
-                    <option>S</option>
-                    <option>M</option>
-                    <option>L</option>
-                    <option>XL</option>
-                    <option>2XL</option>
-                    <option>3XL</option>
-                    <option>4XL</option>
-                </Form.Control>
-            </td>
-            <td>{row.credits_consumed}</td>
-            <td>{row.total_cost}</td>
+                        <option>XS</option>
+                        <option>S</option>
+                        <option>M</option>
+                        <option>L</option>
+                        <option>XL</option>
+                        <option>2XL</option>
+                        <option>3XL</option>
+                        <option>4XL</option>
+                    </Form.Control>
+                </td>
+                <td>{row.monthly_credits_consumed}</td>
+                <td>{row.individual_cost}</td>
             </tr>
           )})
       };
@@ -295,10 +308,18 @@ class ComputeTable extends Component {
                         </Table>
                     </Col>
                 </Row>
+                <Row className="justify-content-md-center">
+                    <Col md={8} xs={"auto"} lg={8}>
+                        <TotalCompute
+                        total_credits_consumed_monthly={this.state.total_credits_consumed_monthly}
+                        total_cost_monthly={this.state.total_cost_monthly}     
+                        />
+                    </Col>
+                </Row>
             </Container>
             
         )
     }
 }
 
-export default ComputeTable
+export default ComputeDashboard
