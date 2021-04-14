@@ -308,8 +308,8 @@ class ComputeDashboard extends Component {
                         </Table>
                     </Col>
                 </Row>
-                <Row className="justify-content-md-center">
-                    <Col md={8} xs={"auto"} lg={8}>
+                <Row className="justify-content-md-left">
+                    <Col md={6} xs={"auto"} lg={6}>
                         <TotalCompute
                         total_credits_consumed_monthly={this.state.total_credits_consumed_monthly}
                         total_cost_monthly={this.state.total_cost_monthly}     
