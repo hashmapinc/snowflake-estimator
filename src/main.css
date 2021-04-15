@@ -21,3 +21,21 @@ body {
 #submit_button {
   margin-bottom: 100px;
 }
+
+#ComputeContainer {
+  padding-top: 70px;
+}
+
+#TotalComputeRow {
+  padding-top: 35px;
+  padding-bottom: 35px;
+}
+
+#TotalComputeCol1 {
+  padding-top: 12%;
+}
+
+#TotalComputeCol2 {
+  height: 400px;
+  width: 700px;
+}

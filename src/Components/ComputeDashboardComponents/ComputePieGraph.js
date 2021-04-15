@@ -1,0 +1,52 @@
+import React from 'react';
+import { ResponsivePieCanvas } from '@nivo/pie'
+
+function ComputePieGraph(props) {
+  let values = props.row_data.map(row => row.individual_cost);
+  let labels = props.row_data.map(row => row.name);
+
+  let graph_data = values.map(function (value, index){
+    return {"value":value, "label":labels[index], "id":labels[index]}
+  });
+
+  return (
+    <ResponsivePieCanvas
+        data={graph_data}
+        margin={{ top: 70, right: 0, bottom: 70, left: 0 }}
+        innerRadius={0.35}
+        cornerRadius={2}
+        colors={{ scheme: 'accent' }}
+        borderColor={{ from: 'color', modifiers: [ [ 'darker', 0.6 ] ] }}
+        radialLabelsSkipAngle={10}
+        radialLabelsTextXOffset={5}
+        radialLabelsTextColor="#333333"
+        radialLabelsLinkDiagonalLength={10}
+        radialLabelsLinkHorizontalLength={20}
+        radialLabelsLinkColor={{ from: 'color' }}
+        sliceLabelsSkipAngle={10}
+        sliceLabelsTextColor="#333333"
+        defs={[
+            {
+                id: 'dots',
+                type: 'patternDots',
+                background: 'inherit',
+                color: 'rgba(255, 255, 255, 0.3)',
+                size: 4,
+                padding: 1,
+                stagger: true
+            },
+            {
+                id: 'lines',
+                type: 'patternLines',
+                background: 'inherit',
+                color: 'rgba(255, 255, 255, 0.3)',
+                rotation: -45,
+                lineWidth: 6,
+                spacing: 10
+            }
+        ]}
+    />
+  )
+}
+
+export default ComputePieGraph;

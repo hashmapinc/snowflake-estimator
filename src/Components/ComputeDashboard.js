@@ -2,8 +2,11 @@ import React, {Component} from 'react';
 import {Table, Container, Row, Col, Button, Form} from "react-bootstrap";
 import TotalCompute from './ComputeDashboardComponents/TotalCompute'
 import '../main.css';
+import ComputePieGraph from './ComputeDashboardComponents/ComputePieGraph';
 
 class ComputeDashboard extends Component {
+    // The logic for the dynamic table
+    // user can add rows
     constructor() {
       super();
   
@@ -21,7 +24,7 @@ class ComputeDashboard extends Component {
                 },
                 row_data: [
                     {
-                        name: 'Sample',
+                        name: 'Warehouse ' + '1',
                         per_credit_cost: 3,
                         hours_per_day: 6,
                         days_per_week: 5,
@@ -33,7 +36,7 @@ class ComputeDashboard extends Component {
                 ],
                 total_cost_monthly: 1560,
                 total_credits_consumed_monthly: 520,
-                style: {"padding-top":"70px"},
+                row_counter: 1,
             };
         this.findWarehouseSizeValue = this.findWarehouseSizeValue.bind(this);
         this.handleTotalCostChanged = this.handleTotalCostChanged.bind(this);
@@ -42,26 +45,28 @@ class ComputeDashboard extends Component {
     }
 
     handleAddRow() {
-        var row = {
-            name: 'Sample',
-            per_credit_cost: 3,
-            hours_per_day: 6,
-            days_per_week: 5,
-            warehouse_count: 2,
-            warehouse_size: "S",
-            monthly_credits_consumed: 520,
-            individual_cost: 1560
+        if (this.state.row_counter < 10) {
+            var row = {
+                name: 'Warehouse ' + String(this.state.row_counter+1),
+                per_credit_cost: 3,
+                hours_per_day: 6,
+                days_per_week: 5,
+                warehouse_count: 2,
+                warehouse_size: "S",
+                monthly_credits_consumed: 520,
+                individual_cost: 1560
+            }
+            
+            var row_data = this.state.row_data;
+            row_data.push(row);
+    
+            this.setState({
+                row_data: row_data,
+                row_counter: this.state.row_counter + 1,
+            });
+    
+            this.computeMonthlyTotals();
         }
-        
-        var row_data = this.state.row_data;
-        row_data.push(row);
-
-        this.setState({
-            row_data: row_data
-        });
-
-        this.computeMonthlyTotals();
-        console.log(this.state.row_data)
     }
 
     findWarehouseSizeValue(value) {
@@ -283,16 +288,16 @@ class ComputeDashboard extends Component {
   
         render() {
         return(
-            <Container fluid style={this.state.style}>
+            <Container id="ComputeContainer" fluid>
                 <Row className="justify-content-md-center">
                     <Col>
                         <Button variant="outline-primary" size="sm" onClick={this.handleAddRow.bind(this)}>Add Row</Button>
                     </Col>
-                    <Col md={12} xs={"auto"} lg={12}>
+                    <Col md={12} xs={12} lg={12}>
                         <Table striped bordered hover variant="dark" responsive>
                             <thead>
                                 <tr>
-                                    <th>Name (optional)</th>
+                                    <th>Warehouse Name or Function</th>
                                     <th>Per Credit Cost</th>
                                     <th>Hours Used Per Day</th>
                                     <th>Days used Per Week</th>
@@ -308,11 +313,16 @@ class ComputeDashboard extends Component {
                         </Table>
                     </Col>
                 </Row>
-                <Row className="justify-content-md-left">
-                    <Col md={6} xs={"auto"} lg={6}>
+                <Row id="TotalComputeRow" className="justify-content-md-center">
+                    <Col id="TotalComputeCol1" md={6} xs={12} lg={6}>
                         <TotalCompute
                         total_credits_consumed_monthly={this.state.total_credits_consumed_monthly}
                         total_cost_monthly={this.state.total_cost_monthly}     
+                        />
+                    </Col>
+                    <Col id="TotalComputeCol2" md={6} xs={"auto"} lg={6}>
+                        <ComputePieGraph 
+                        row_data={this.state.row_data}
                         />
                     </Col>
                 </Row>
