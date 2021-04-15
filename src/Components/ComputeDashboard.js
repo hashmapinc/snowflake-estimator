@@ -30,14 +30,15 @@ class ComputeDashboard extends Component {
                         hours_per_day: 6,
                         days_per_week: 5,
                         warehouse_count: 2,
-                        warehouse_size: "S",
-                        monthly_credits_consumed: 520,
-                        individual_cost: 1560
+                        warehouse_size: "XS",
+                        monthly_credits_consumed: 260,
+                        individual_cost: 780
                     }
                 ],
                 total_cost_monthly: 1560,
                 total_credits_consumed_monthly: 520,
                 row_counter: 1,
+                default_name_counter: 1,
             };
         this.findWarehouseSizeValue = this.findWarehouseSizeValue.bind(this);
         this.handleTotalCostChanged = this.handleTotalCostChanged.bind(this);
@@ -50,14 +51,14 @@ class ComputeDashboard extends Component {
     handleAddRow() {
         if (this.state.row_counter < 10) {
             var row = {
-                name: 'Warehouse ' + String(this.state.row_counter+1),
+                name: 'Warehouse ' + String(this.state.default_name_counter+1),
                 per_credit_cost: 3,
                 hours_per_day: 6,
                 days_per_week: 5,
                 warehouse_count: 2,
-                warehouse_size: "S",
-                monthly_credits_consumed: 520,
-                individual_cost: 1560
+                warehouse_size: "XS",
+                monthly_credits_consumed: 260,
+                individual_cost: 780
             }
             
             var row_data = this.state.row_data;
@@ -66,8 +67,29 @@ class ComputeDashboard extends Component {
             this.setState({
                 row_data: row_data,
                 row_counter: this.state.row_counter + 1,
+                default_name_counter: this.state.default_name_counter + 1
             });
     
+            this.computeMonthlyTotals();
+        } else {
+            this.setState({
+                default_name_counter: this.state.default_name_counter + 1
+            });
+        }
+    }
+
+    // when user clicks "Delete Row" button, row object is delete from row_data array
+    handleDeleteRow(i) {
+        if (this.state.row_counter > 1) {
+            var row_data = this.state.row_data;
+
+            row_data.splice(i, 1);
+
+            this.setState({
+                row_data: row_data,
+                row_counter: this.state.row_counter - 1
+            });
+
             this.computeMonthlyTotals();
         }
     }
@@ -89,13 +111,15 @@ class ComputeDashboard extends Component {
     }
 
     handleCreditsCostChanged(i, event) {
-        var row_data = this.state.row_data;
-        row_data[i].per_credit_cost  = event.target.value;
-        this.handleTotalCostChanged(i);
-    
-        this.setState({
-          row_data: row_data
-        });
+        if (event.target.value >= 0) {
+            var row_data = this.state.row_data;
+            row_data[i].per_credit_cost  = event.target.value;
+            this.handleTotalCostChanged(i);
+        
+            this.setState({
+            row_data: row_data
+            });
+        }
       }
 
     handleHoursChanged(i, event) {
@@ -187,6 +211,7 @@ class ComputeDashboard extends Component {
                 <td>
                     <Form.Control
                         type="number"
+                        min="1"
                         value={row.per_credit_cost}
                         onChange={context.handleCreditsCostChanged.bind(context, index)}
                         />
@@ -292,6 +317,9 @@ class ComputeDashboard extends Component {
                 </td>
                 <td>{(row.monthly_credits_consumed * 1).toLocaleString()} credits</td>
                 <td>${(row.individual_cost * 1).toLocaleString()}</td>
+                <td>
+                    <Button variant="outline-danger" size="md" onClick={context.handleDeleteRow.bind(context, index)}>Delete</Button>
+                </td>
             </tr>
           )})
       };
@@ -321,6 +349,11 @@ class ComputeDashboard extends Component {
           };
         return(
             <Container id="ComputeContainer" fluid>
+                {/* <Row className="justify-content-md-center">
+                    <Col md={12} xs={12} lg={12}>
+                        <h3 className="text-center">Add your expected Snowflake usage details to get a Snowflake credit and cost estimate instantly.</h3>
+                    </Col>
+                </Row> */}
                 <Row className="justify-content-md-center">
                     <Col>
                         <Button variant="outline-primary" size="sm" onClick={this.handleAddRow.bind(this)}>Add Row</Button>
@@ -334,9 +367,10 @@ class ComputeDashboard extends Component {
                                     <th>Hours Used Per Day</th>
                                     <th>Days used Per Week</th>
                                     <th>Number of Warehouse Instances</th>
-                                    <th>Warehouse Choice</th>
+                                    <th>Warehouse Size</th>
                                     <th>Credits Consumed Per Month</th>
                                     <th>Cost (per month)</th>
+                                    <th>Delete Row</th>
                                 </tr>
                             </thead>
                             <tbody>

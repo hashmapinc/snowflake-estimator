@@ -23,7 +23,7 @@ body {
 }
 
 #ComputeContainer {
-  padding-top: 70px;
+  padding-top: 30px;
 }
 
 #TotalComputeRow {
@@ -38,4 +38,10 @@ body {
 #TotalComputeCol2 {
   height: 400px;
   width: 700px;
+}
+
+#Directions {
+  padding-top: 30px;
+  font-weight: bold;
+
 }
