@@ -5,11 +5,11 @@ import '../main.css';
 import ComputePieGraph from './ComputeDashboardComponents/ComputePieGraph';
 
 class ComputeDashboard extends Component {
-    // The logic for the dynamic table
+    // The logic for the dynamic table dashboard
     // user can add rows
     constructor() {
       super();
-  
+
         this.state = {
             warehouse_values: 
                 {
@@ -22,6 +22,7 @@ class ComputeDashboard extends Component {
                     "3XL": 64,
                     "4XL": 128
                 },
+                // starting sample row
                 row_data: [
                     {
                         name: 'Warehouse ' + '1',
@@ -44,6 +45,8 @@ class ComputeDashboard extends Component {
     
     }
 
+    // when user clicks "add row", new row object is pushed to row_data array
+    // max rows = 10
     handleAddRow() {
         if (this.state.row_counter < 10) {
             var row = {
@@ -69,10 +72,13 @@ class ComputeDashboard extends Component {
         }
     }
 
+    // find corresponding value associated with warehouse size
     findWarehouseSizeValue(value) {
         return this.state.warehouse_values[value]
     }
-  
+
+// all handle(variable)changed functions handle when a field in a row is changed
+// uses index to change the correct field within a specific row
     handleNameChanged(i, event) {
         var row_data = this.state.row_data;
         row_data[i].name  = event.target.value;
@@ -153,14 +159,18 @@ class ComputeDashboard extends Component {
         });
         this.computeMonthlyTotals();
       }
-    
+
+    // used to update the TotalCompute table
+    // function is called every time a value is changed in any row
     computeMonthlyTotals() {
         this.setState({
             total_credits_consumed_monthly: this.state.row_data.map(a => a.monthly_credits_consumed).reduce((a, b) => parseFloat(a) + parseFloat(b)),
             total_cost_monthly: this.state.row_data.map(a => a.individual_cost).reduce((a, b) => parseFloat(a) + parseFloat(b)),
         })
     }
-  
+    
+    // function that renders every row object in row_data array
+    // Compute table for individual warehouses
     renderRows() {
       var context = this;
   
@@ -280,13 +290,35 @@ class ComputeDashboard extends Component {
                         <option>4XL</option>
                     </Form.Control>
                 </td>
-                <td>{row.monthly_credits_consumed}</td>
-                <td>{row.individual_cost}</td>
+                <td>{(row.monthly_credits_consumed * 1).toLocaleString()} credits</td>
+                <td>${(row.individual_cost * 1).toLocaleString()}</td>
             </tr>
           )})
       };
-  
-        render() {
+    
+    // ComputeDashboard that contains the compute table for individual warehouses, TotalCompute table, and the ComputePieGraph
+    render() {
+        // Pie Chart Title style
+        const styles = {
+            overlay: {
+              position: "absolute",
+              top: 0,
+              right: 0,
+              bottom: 0,
+              left: 0,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: 96,
+              color: "black",
+              textAlign: "center",
+              pointerEvents: "none"
+            },
+            totalLabel: {
+              fontSize: 14
+            }
+          };
         return(
             <Container id="ComputeContainer" fluid>
                 <Row className="justify-content-md-center">
@@ -324,6 +356,10 @@ class ComputeDashboard extends Component {
                         <ComputePieGraph 
                         row_data={this.state.row_data}
                         />
+                        <div style={styles.overlay}>
+                            <span style={styles.totalLabel}>% Monthly</span>
+                            <span style={styles.totalLabel}>Cost per Warehouse</span>
+                        </div>
                     </Col>
                 </Row>
             </Container>
