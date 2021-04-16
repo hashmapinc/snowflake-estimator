@@ -110,6 +110,7 @@ class ComputeDashboard extends Component {
         });
     }
 
+    // handles credit cost change and ensures user can only enter a positive value
     handleCreditsCostChanged(i, event) {
         if (event.target.value >= 0) {
             var row_data = this.state.row_data;
@@ -326,7 +327,7 @@ class ComputeDashboard extends Component {
     
     // ComputeDashboard that contains the compute table for individual warehouses, TotalCompute table, and the ComputePieGraph
     render() {
-        // Pie Chart Title style
+        // Text inside pie chart styling
         const styles = {
             overlay: {
               position: "absolute",
@@ -349,11 +350,6 @@ class ComputeDashboard extends Component {
           };
         return(
             <Container id="ComputeContainer" fluid>
-                {/* <Row className="justify-content-md-center">
-                    <Col md={12} xs={12} lg={12}>
-                        <h3 className="text-center">Add your expected Snowflake usage details to get a Snowflake credit and cost estimate instantly.</h3>
-                    </Col>
-                </Row> */}
                 <Row className="justify-content-md-center">
                     <Col>
                         <Button variant="outline-primary" size="sm" onClick={this.handleAddRow.bind(this)}>Add Row</Button>
@@ -391,7 +387,7 @@ class ComputeDashboard extends Component {
                         row_data={this.state.row_data}
                         />
                         <div style={styles.overlay}>
-                            <span style={styles.totalLabel}>% Monthly</span>
+                            <span style={styles.totalLabel}>Monthly</span>
                             <span style={styles.totalLabel}>Cost per Warehouse</span>
                         </div>
                     </Col>
