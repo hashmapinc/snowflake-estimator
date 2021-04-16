@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Table, Container, Row, Col, Button, Form} from "react-bootstrap";
+import {Container, Row, Col, Button} from "react-bootstrap";
 import TotalCompute from './ComputeDashboardComponents/TotalCompute'
 import '../main.css';
 import ComputePieGraph from './ComputeDashboardComponents/ComputePieGraph';
@@ -26,7 +26,7 @@ class ComputeDashboard extends Component {
                 // starting sample row
                 row_data: [
                     {
-                        name: 'Warehouse ' + '1',
+                        name: 'Warehouse 1',
                         per_credit_cost: 3,
                         hours_per_day: 6,
                         days_per_week: 5,
