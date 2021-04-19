@@ -4,8 +4,10 @@ import TotalCompute from './ComputeDashboardComponents/TotalCompute'
 import '../main.css';
 import ComputePieGraph from './ComputeDashboardComponents/ComputePieGraph';
 import ComputeTable from './ComputeDashboardComponents/ComputeTable';
+import StorageTable from './StorageDashboardComponents/StorageTable';
+import TotalStorage from './StorageDashboardComponents/TotalStorage';
 
-class ComputeDashboard extends Component {
+class Dashboard extends Component {
     // The logic for the dynamic table dashboard
     // user can add rows
     constructor() {
@@ -26,7 +28,7 @@ class ComputeDashboard extends Component {
                 // starting sample row
                 row_data: [
                     {
-                        name: 'Warehouse 1',
+                        name: 'Data Loading',
                         per_credit_cost: 3,
                         hours_per_day: 6,
                         days_per_week: 5,
@@ -36,14 +38,22 @@ class ComputeDashboard extends Component {
                         individual_cost: 780
                     }
                 ],
-                total_cost_monthly: 1560,
-                total_credits_consumed_monthly: 520,
+                storage_data: {
+                    storage_per_month: 3,
+                    on_demand_cost: 40,
+                    capacity_cost: 23
+                },
+                total_cost_monthly: 780,
+                total_credits_consumed_monthly: 260,
                 row_counter: 1,
                 default_name_counter: 1,
             };
         this.findWarehouseSizeValue = this.findWarehouseSizeValue.bind(this);
         this.handleTotalCostChanged = this.handleTotalCostChanged.bind(this);
         this.computeMonthlyTotals = this.computeMonthlyTotals.bind(this);
+        this.handleStorageChanged = this.handleStorageChanged.bind(this);
+        this.handleOnDemandCostChanged = this.handleOnDemandCostChanged.bind(this);
+        this.handleCapacityCostChanged = this.handleCapacityCostChanged.bind(this);
     
     }
 
@@ -52,7 +62,7 @@ class ComputeDashboard extends Component {
     handleAddRow() {
         if (this.state.row_counter < 10) {
             var row = {
-                name: 'Warehouse ' + String(this.state.default_name_counter+1),
+                name: 'Function ' + String(this.state.default_name_counter+1),
                 per_credit_cost: 3,
                 hours_per_day: 6,
                 days_per_week: 5,
@@ -194,6 +204,37 @@ class ComputeDashboard extends Component {
             total_cost_monthly: this.state.row_data.map(a => a.individual_cost).reduce((a, b) => parseFloat(a) + parseFloat(b)),
         })
     }
+
+// functions that handle storage change
+    handleStorageChanged(event) {
+        if (event.target.value >= 0) {
+            var storage_data = this.state.storage_data
+            storage_data.storage_per_month = event.target.value
+            this.setState({
+                storage_data: storage_data
+            });
+        }
+    }
+
+    handleOnDemandCostChanged(event) {
+        if (event.target.value >= 0) {
+            var storage_data = this.state.storage_data
+            storage_data.on_demand_cost = event.target.value
+            this.setState({
+                storage_data: storage_data
+            });
+        }
+    }
+
+    handleCapacityCostChanged(event) {
+        if (event.target.value >= 0) {
+            var storage_data = this.state.storage_data
+            storage_data.capacity_cost = event.target.value
+            this.setState({
+                storage_data: storage_data
+            });
+        }
+    }
     
     // ComputeDashboard that contains the compute table for individual warehouses, TotalCompute table, and the ComputePieGraph
     render() {
@@ -220,6 +261,9 @@ class ComputeDashboard extends Component {
           };
         return(
             <Container id="ComputeContainer" fluid>
+                <Row className="justify-content-md-left">
+                    <h3 id="ComputeH3">Estimate Compute</h3>
+                </Row>
                 <Row className="justify-content-md-center">
                     <Col>
                         <Button variant="outline-primary" size="sm" onClick={this.handleAddRow.bind(this)}>Add Row</Button>
@@ -246,10 +290,26 @@ class ComputeDashboard extends Component {
                         </div>
                     </Col>
                 </Row>
+                <Row className="justify-content-md-left">
+                    <h3 id="StorageH3">Estimate Storage</h3>
+                </Row>
+                <Row>
+                    <Col md={6} xs={12} lg={6}>
+                        <StorageTable 
+                        handleStorageChanged={this.handleStorageChanged} 
+                        handleOnDemandCostChanged={this.handleOnDemandCostChanged}
+                        handleCapacityCostChanged={this.handleCapacityCostChanged}
+                        storage_data={this.state.storage_data} />
+                    </Col>
+                    <Col md={6} xs={"auto"} lg={6}>
+                        <TotalStorage 
+                        storage_data={this.state.storage_data} />
+                    </Col> 
+                </Row>
             </Container>
             
         )
     }
 }
 
-export default ComputeDashboard
+export default Dashboard;

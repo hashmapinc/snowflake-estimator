@@ -4,7 +4,7 @@ import PageNavbar from './Components/PageNavbar';
 import Cookies from 'js-cookie';
 import HubspotFormNavbar from './Components/HubspotFormNavbar';
 import HubspotForm from './Components/HubspotForm';
-import ComputeDashboard from './Components/ComputeDashboard'
+import Dashboard from './Components/Dashboard'
 
 
 import './main.css'
@@ -35,8 +35,8 @@ class App extends Component {
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
           
             <PageNavbar />
-            <h3 id="Directions" className="text-center">Add your expected Snowflake usage details to get a Snowflake credit and cost estimate instantly</h3>    
-            <ComputeDashboard />
+            <h2 id="Directions" className="text-center">Add your expected Snowflake usage details to get a Snowflake credit and cost estimate instantly</h2>    
+            <Dashboard />
   
           <script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/4376150.js"></script>
           <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

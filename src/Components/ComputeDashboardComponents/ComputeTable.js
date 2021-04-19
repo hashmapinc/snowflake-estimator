@@ -11,7 +11,7 @@ const ComputeTable = (props) => {
         <Table striped bordered hover variant="dark" responsive>
             <thead>
                 <tr>
-                    <th>Warehouse Name or Function</th>
+                    <th>Business Function</th>
                     <th>Per Credit Cost</th>
                     <th>Hours Used Per Day</th>
                     <th>Days used Per Week</th>
