@@ -18,6 +18,49 @@ body {
   height: 10vh;
 }
 
-#submit_button {
-  margin-bottom: 100px;
+#ComputeContainer {
+  padding-top: 20px;
+}
+
+#TotalComputeRow {
+  padding-top: 35px;
+}
+
+#TotalComputeCol1 {
+  padding-top: 12%;
+}
+
+#TotalComputeCol2 {
+  height: 400px;
+  width: 700px;
+}
+
+#Directions {
+  padding-top: 30px;
+}
+
+#ComputeH3 {
+  font-weight: bold;
+  padding-bottom: 10px;
+}
+
+#StorageH3 {
+  font-weight: bold;
+  padding-bottom: 10px;
+}
+
+#StorageRow {
+  padding-bottom: 20px;
+}
+
+#ComputeInfo {
+  padding-left: 7px;
+  bottom: 12px;
+  position: relative;
+}
+
+#StorageInfo {
+  padding-left: 7px;
+  bottom: 12px;
+  position: relative;
 }

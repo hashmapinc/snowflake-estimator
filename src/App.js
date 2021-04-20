@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import NewNavbar from './Components/Navbar';
-import CalcForm from './Components/CalcForm';
-import Cookies from 'js-cookie';
 import {Container} from 'react-bootstrap';
-import HubspotFormNavbar from './Components/HubspotFormNavbar';
-import HubspotForm from './Components/HubspotForm';
+import PageNavbar from './Components/PageNavbar';
+import Cookies from 'js-cookie';
+import HubspotFormNavbar from './Components/HubspotDashboardComponents/HubspotFormNavbar';
+import HubspotForm from './Components/HubspotDashboardComponents/HubspotForm';
+import Dashboard from './Components/Dashboard'
 
 
 import './main.css'
@@ -18,8 +18,6 @@ class App extends Component {
       formSubmitCookie: Cookies.get('_hs_form_submitted')
     }
   }
-
-  
 
   render() {
     // checks to see if the user consented to cookies and also successfully submitted the form
@@ -36,8 +34,9 @@ class App extends Component {
             <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat" />
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
           
-          <NewNavbar />
-          <CalcForm />
+            <PageNavbar />
+            <h2 id="Directions" className="text-center">Add your expected Snowflake usage details to get a Snowflake credit and cost estimate instantly</h2>    
+            <Dashboard />
   
           <script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/4376150.js"></script>
           <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -64,8 +63,6 @@ class App extends Component {
     }
     
   }
-    
+
 }
-
-
 export default App;
