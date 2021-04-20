@@ -1,6 +1,6 @@
 import React from 'react';
 import {Table, Form} from 'react-bootstrap';
-
+import "../../main.css"
 // function that renders every row object in row_data array
 // Compute table for individual warehouses
 const StorageTable = (props) => {
