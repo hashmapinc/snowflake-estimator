@@ -1,7 +1,7 @@
 import React from 'react';
 import {OverlayTrigger, Tooltip} from 'react-bootstrap';
 import '../../main.css';
-import infoglyph from '../../info-glyphicon.png';
+import infoglyph from '../../information--v2.png';
 
 
 const renderTooltip = (props) => (
@@ -17,7 +17,7 @@ const StorageInfo = () => {
           delay={{ show: 200, hide: 200 }}
           overlay={renderTooltip}
         >
-          <img src={infoglyph} alt="info" width="13px" height="13px"/>
+          <img src={infoglyph} alt="info" width="15px"/>
         </OverlayTrigger>
       )
 }
