@@ -1,6 +1,6 @@
 import React from 'react';
 import {Table, Form} from 'react-bootstrap';
-import "../../main.css"
+
 // function that renders every row object in row_data array
 // Compute table for individual warehouses
 const StorageTable = (props) => {
@@ -9,10 +9,10 @@ const StorageTable = (props) => {
         <Table striped bordered hover variant="dark" responsive>
             <thead>
                 <tr>
-                    <th>Starting Storage (in TB)</th>
-                    <th>Monthly Average Storage Increase (in TB)</th>
-                    <th>On-Demand Cost Per Month</th>
-                    <th>Capacity Cost Per Month</th>
+                    <td>Starting Storage (in TB)</td>
+                    <td>Monthly Average Storage Increase (in TB)</td>
+                    <td>On-Demand Cost Per Month</td>
+                    <td>Capacity Cost Per Month</td>
                 </tr>
             </thead>
             <tbody>
