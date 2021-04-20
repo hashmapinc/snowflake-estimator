@@ -1,6 +1,6 @@
 import React from 'react';
 import {Table} from 'react-bootstrap';
-
+import '../../main.css'
 // Table that renders the monthly and annual totals
 const TotalStorage = (props) => {
     const style = {"font-weight":"bold"};

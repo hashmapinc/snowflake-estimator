@@ -42,11 +42,13 @@ body {
 #ComputeH3 {
   font-weight: bold;
   padding-bottom: 10px;
+  font-size: 1.5rem;
 }
 
 #StorageH3 {
   font-weight: bold;
   padding-bottom: 10px;
+  font-size: 1.5rem;
 }
 
 #StorageRow {
@@ -63,4 +65,12 @@ body {
   padding-left: 7px;
   bottom: 12px;
   position: relative;
+}
+
+th {
+  font-size: 1rem
+}
+
+td {
+  font-size: 1rem
 }

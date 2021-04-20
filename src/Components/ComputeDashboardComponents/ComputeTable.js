@@ -1,6 +1,7 @@
 import React from 'react';
 import {Table} from 'react-bootstrap';
 import ComputeTableRows from './ComputeTableRows'
+import '../../main.css'
 
 // function that renders every row object in row_data array
 // Compute table for individual warehouses
