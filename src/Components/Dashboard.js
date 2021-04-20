@@ -1,11 +1,13 @@
 import React, {Component} from 'react';
 import {Container, Row, Col, Button} from "react-bootstrap";
-import TotalCompute from './ComputeDashboardComponents/TotalCompute'
+import TotalCompute from './ComputeDashboardComponents/TotalCompute';
 import '../main.css';
 import ComputePieGraph from './ComputeDashboardComponents/ComputePieGraph';
 import ComputeTable from './ComputeDashboardComponents/ComputeTable';
 import StorageTable from './StorageDashboardComponents/StorageTable';
 import TotalStorage from './StorageDashboardComponents/TotalStorage';
+import ComputeInfo from './Overlays/ComputeInfo';
+import StorageInfo from './Overlays/StorageInfo';
 
 class Dashboard extends Component {
     // The logic for the dynamic table dashboard
@@ -39,6 +41,7 @@ class Dashboard extends Component {
                     }
                 ],
                 storage_data: {
+                    starting_storage: 4,
                     storage_per_month: 3,
                     on_demand_cost: 40,
                     capacity_cost: 23
@@ -51,9 +54,10 @@ class Dashboard extends Component {
         this.findWarehouseSizeValue = this.findWarehouseSizeValue.bind(this);
         this.handleTotalCostChanged = this.handleTotalCostChanged.bind(this);
         this.computeMonthlyTotals = this.computeMonthlyTotals.bind(this);
-        this.handleStorageChanged = this.handleStorageChanged.bind(this);
+        this.handleMonthlyStorageChanged = this.handleMonthlyStorageChanged.bind(this);
         this.handleOnDemandCostChanged = this.handleOnDemandCostChanged.bind(this);
         this.handleCapacityCostChanged = this.handleCapacityCostChanged.bind(this);
+        this.handleStartingStorageChanged = this.handleStartingStorageChanged.bind(this);
     
     }
 
@@ -206,10 +210,20 @@ class Dashboard extends Component {
     }
 
 // functions that handle storage change
-    handleStorageChanged(event) {
+    handleMonthlyStorageChanged(event) {
         if (event.target.value >= 0) {
             var storage_data = this.state.storage_data
             storage_data.storage_per_month = event.target.value
+            this.setState({
+                storage_data: storage_data
+            });
+        }
+    }
+
+    handleStartingStorageChanged(event) {
+        if (event.target.value >= 0) {
+            var storage_data = this.state.storage_data
+            storage_data.starting_storage = event.target.value
             this.setState({
                 storage_data: storage_data
             });
@@ -262,7 +276,7 @@ class Dashboard extends Component {
         return(
             <Container id="ComputeContainer" fluid>
                 <Row className="justify-content-md-left">
-                    <h3 id="ComputeH3">Estimate Compute</h3>
+                    <h3 id="ComputeH3">Estimate Compute<span id="ComputeInfo"><ComputeInfo/></span></h3>
                 </Row>
                 <Row className="justify-content-md-center">
                     <Col>
@@ -291,12 +305,13 @@ class Dashboard extends Component {
                     </Col>
                 </Row>
                 <Row className="justify-content-md-left">
-                    <h3 id="StorageH3">Estimate Storage</h3>
+                    <h3 id="StorageH3">Estimate Storage<span id="StorageInfo"><StorageInfo/></span></h3>
                 </Row>
-                <Row>
+                <Row id="StorageRow">
                     <Col md={6} xs={12} lg={6}>
                         <StorageTable 
-                        handleStorageChanged={this.handleStorageChanged} 
+                        handleStartingStorageChanged={this.handleStartingStorageChanged}
+                        handleMonthlyStorageChanged={this.handleMonthlyStorageChanged} 
                         handleOnDemandCostChanged={this.handleOnDemandCostChanged}
                         handleCapacityCostChanged={this.handleCapacityCostChanged}
                         storage_data={this.state.storage_data} />

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Navbar} from "react-bootstrap";
-import '../main.css'
+import '../../main.css'
 
 class HubspotFormNavbar extends Component {
 

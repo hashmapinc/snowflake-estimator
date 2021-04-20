@@ -9,7 +9,8 @@ const StorageTable = (props) => {
         <Table striped bordered hover variant="dark" responsive>
             <thead>
                 <tr>
-                    <th>Monthly Average Storage (in TB)</th>
+                    <th>Starting Storage (in TB)</th>
+                    <th>Monthly Average Storage Increase (in TB)</th>
                     <th>On-Demand Cost Per Month</th>
                     <th>Capacity Cost Per Month</th>
                 </tr>
@@ -19,8 +20,15 @@ const StorageTable = (props) => {
                     <td>
                         <Form.Control
                             type="number"
+                            value={storage_data.starting_storage}
+                            onChange={props.handleStartingStorageChanged}
+                            />
+                    </td>
+                    <td>
+                        <Form.Control
+                            type="number"
                             value={storage_data.storage_per_month}
-                            onChange={props.handleStorageChanged}
+                            onChange={props.handleMonthlyStorageChanged}
                             />
                     </td>
                     <td>

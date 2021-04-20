@@ -48,3 +48,19 @@ body {
   font-weight: bold;
   padding-bottom: 10px;
 }
+
+#StorageRow {
+  padding-bottom: 20px;
+}
+
+#ComputeInfo {
+  padding-left: 7px;
+  bottom: 12px;
+  position: relative;
+}
+
+#StorageInfo {
+  padding-left: 7px;
+  bottom: 12px;
+  position: relative;
+}
