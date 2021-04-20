@@ -1,7 +1,6 @@
 import React from 'react';
 import {Table} from 'react-bootstrap';
 import ComputeTableRows from './ComputeTableRows'
-import '../../main.css'
 
 // function that renders every row object in row_data array
 // Compute table for individual warehouses
@@ -12,15 +11,15 @@ const ComputeTable = (props) => {
         <Table striped bordered hover variant="dark" responsive>
             <thead>
                 <tr>
-                    <th>Business Function</th>
-                    <th>Per Credit Cost</th>
-                    <th>Hours Used Per Day</th>
-                    <th>Days used Per Week</th>
-                    <th>Number of Warehouse Instances</th>
-                    <th>Warehouse Size</th>
-                    <th>Credits Consumed Per Month</th>
-                    <th>Cost (per month)</th>
-                    <th>Delete Row</th>
+                    <td>Business Function</td>
+                    <td>Per Credit Cost</td>
+                    <td>Hours Used Per Day</td>
+                    <td>Days used Per Week</td>
+                    <td>Warehouse Instances</td>
+                    <td>Warehouse Size</td>
+                    <td>Credits Consumed Per Month</td>
+                    <td>Cost (per month)</td>
+                    <td>Delete Row</td>
                 </tr>
             </thead>
             <tbody>
