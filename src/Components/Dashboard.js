@@ -299,8 +299,8 @@ class Dashboard extends Component {
                         row_data={this.state.row_data}
                         />
                         <div style={styles.overlay}>
-                            <span style={styles.totalLabel}>Monthly</span>
-                            <span style={styles.totalLabel}>Cost per Warehouse</span>
+                            <span style={styles.totalLabel}>Monthly Cost</span>
+                            <span style={styles.totalLabel}>per Business Function</span>
                         </div>
                     </Col>
                 </Row>
