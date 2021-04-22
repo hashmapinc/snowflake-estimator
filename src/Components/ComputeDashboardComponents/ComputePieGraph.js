@@ -8,6 +8,7 @@ function ComputePieGraph(props) {
   // format data for graphing
   let values = props.row_data.map(row => row.individual_cost);
   let labels = props.row_data.map(row => row.name);
+  let total_cost_monthly = props.total_cost_monthly;
 
   let graph_data = values.map(function (value, index){
     return {"value":value, "label":labels[index], "id":labels[index]}
@@ -28,6 +29,7 @@ function ComputePieGraph(props) {
         radialLabelsLinkDiagonalLength={10}
         radialLabelsLinkHorizontalLength={20}
         radialLabelsLinkColor={{ from: 'color' }}
+        sliceLabel={function(e){return (e.value/total_cost_monthly*100).toFixed(2) + "%"}}
         sliceLabelsSkipAngle={10}
         sliceLabelsTextColor="#333333"
     />
