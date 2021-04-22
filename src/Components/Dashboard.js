@@ -297,9 +297,10 @@ class Dashboard extends Component {
                     <Col id="TotalComputeCol2" md={6} xs={"auto"} lg={6}>
                         <ComputePieGraph 
                         row_data={this.state.row_data}
+                        total_cost_monthly={this.state.total_cost_monthly}
                         />
                         <div style={styles.overlay}>
-                            <span style={styles.totalLabel}>Monthly Cost</span>
+                            <span style={styles.totalLabel}>% Cost</span>
                             <span style={styles.totalLabel}>per Business Function</span>
                         </div>
                     </Col>
