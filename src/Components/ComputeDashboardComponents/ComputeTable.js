@@ -18,7 +18,7 @@ const ComputeTable = (props) => {
                     <td>Warehouse Instances</td>
                     <td>Warehouse Size</td>
                     <td>Credits Consumed Per Month</td>
-                    <td>Cost (per month)</td>
+                    <td>Cost Per Month</td>
                     <td>Delete Row</td>
                 </tr>
             </thead>
