@@ -16,13 +16,13 @@ const TotalStorage = (props) => {
             <tbody>
                 <tr>
                     <td>First Year Monthly Average Cost</td>
-                    <td>${(((storage_data.on_demand_cost * storage_data.starting_storage) + (storage_data.on_demand_cost * storage_data.storage_per_month * (12*13/2))) /12).toLocaleString(undefined,{'minimumFractionDigits':0,'maximumFractionDigits':0})}</td>
-                    <td>${(((storage_data.capacity_cost * storage_data.starting_storage) + (storage_data.capacity_cost * storage_data.storage_per_month * (12*13/2))) /12).toLocaleString(undefined,{'minimumFractionDigits':0,'maximumFractionDigits':0})}</td>
+                    <td>${(((storage_data.on_demand_cost * storage_data.starting_storage * 12) + (storage_data.on_demand_cost * storage_data.storage_per_month * (12*13/2))) /12).toLocaleString(undefined,{'minimumFractionDigits':0,'maximumFractionDigits':0})}</td>
+                    <td>${(((storage_data.capacity_cost * storage_data.starting_storage * 12) + (storage_data.capacity_cost * storage_data.storage_per_month * (12*13/2))) /12).toLocaleString(undefined,{'minimumFractionDigits':0,'maximumFractionDigits':0})}</td>
                 </tr>
                 <tr>
-                    <td>First Year Cost (doubles yearly)</td>
-                    <td>${((storage_data.on_demand_cost * storage_data.starting_storage) + (storage_data.on_demand_cost * storage_data.storage_per_month * (12*13/2))).toLocaleString(undefined,{'minimumFractionDigits':0,'maximumFractionDigits':0})}</td>
-                    <td>${((storage_data.capacity_cost * storage_data.starting_storage) + (storage_data.capacity_cost * storage_data.storage_per_month * (12*13/2))).toLocaleString(undefined,{'minimumFractionDigits':0,'maximumFractionDigits':0})}</td>
+                    <td>First Year Cost</td>
+                    <td>${((storage_data.on_demand_cost * storage_data.starting_storage * 12) + (storage_data.on_demand_cost * storage_data.storage_per_month * (12*13/2))).toLocaleString(undefined,{'minimumFractionDigits':0,'maximumFractionDigits':0})}</td>
+                    <td>${((storage_data.capacity_cost * storage_data.starting_storage * 12) + (storage_data.capacity_cost * storage_data.storage_per_month * (12*13/2))).toLocaleString(undefined,{'minimumFractionDigits':0,'maximumFractionDigits':0})}</td>
                 </tr>
             </tbody>
         </Table>
