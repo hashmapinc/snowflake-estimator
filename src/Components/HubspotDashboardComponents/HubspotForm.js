@@ -25,8 +25,25 @@ class HubspotForm extends React.Component {
                 region: "na1",
                 portalId: "4376150",
                 formId: "0c64bc32-b9aa-4319-9915-d9d9b70ce3f1",
-                target: "#hubspotForm"
-          })
+                target: "#hubspotForm",
+                // clearout hubspot integration
+                onFormReady: function ($form) {
+                  var clearout = window.clearout = window.clearout || [], 
+                    opts = { 
+                      app_token: "ad06b3f96dd1cdd1e5dd580597c43dd7:e9cd0eea3ab94a34beecf5f7c650a1cb83ac10d890e66130d6cc6ea5252e0478", 
+                      mode: "ajax", 
+                      api_url:"https://api.clearout.io"
+                    };
+                  // eslint-disable-next-line
+                  clearout.push(["initialize", JSON.stringify(opts), $form]),
+                  function () {
+                    var t = document, e = t.createElement("script"), a = t.getElementsByTagName("script")[0];
+                    // eslint-disable-next-line
+                    e.type = "text/javascript", e.async = !0, e.src = "https://clearout.io/wp-content/co-js-widget/clearout_js_widget.js",
+                    a.parentNode.insertBefore(e, a)
+                  }();
+                }
+          });
         }
       });
       // if the form is submitted, add a cookie to allow user to content page
@@ -34,7 +51,7 @@ class HubspotForm extends React.Component {
         if (EventTarget.data.type === 'hsFormCallback' && EventTarget.data.eventName === 'onFormSubmitted') {
           Cookies.set('_hs_form_submitted', md5("hubspot form submitted"), {expires: 365, path: '/'})
         }
-      })
+      });
     }
     
       render() {
