@@ -62,7 +62,7 @@ class Dashboard extends Component {
     }
 
     // when user clicks "add row", new row object is pushed to row_data array
-    // max rows = 10
+    // max rows = 50
     handleAddRow() {
         if (this.state.row_counter < 50) {
             var row = {
