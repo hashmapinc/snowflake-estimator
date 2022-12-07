@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
-import { Container } from 'react-bootstrap';
 import PageNavbar from './Components/PageNavbar';
-import Cookies from 'js-cookie';
-import HubspotFormNavbar from './Components/HubspotDashboardComponents/HubspotFormNavbar';
-import HubspotForm from './Components/HubspotDashboardComponents/HubspotForm';
 import Dashboard from './Components/Dashboard'
 
 
@@ -13,16 +9,9 @@ import './App.css';
 class App extends Component {
   constructor() {
     super();
-    this.state = {
-      cookieConsent: Cookies.get('hubspotutk'),
-      formSubmitCookie: Cookies.get('_hs_form_submitted')
-    }
   }
 
   render() {
-    // checks to see if the user consented to cookies and also successfully submitted the form
-    // conditionally shows main page content or the hubspot form
-    if (this.state.formSubmitCookie && this.state.cookieConsent) {
       return (
         <div className="container">
           <meta charSet="utf-8" />
@@ -50,19 +39,7 @@ class App extends Component {
             crossOrigin="anonymous"></script>
         </div>
       )
-    } else {
-      return (
-        <Container fluid>
-          <HubspotFormNavbar />
-          <HubspotForm />
-          <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-            crossOrigin="anonymous"></script>
-        </Container>
-      )
     }
-
-  }
 
 }
 export default App;
